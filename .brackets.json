@@ -1,0 +1,14 @@
+{
+    "jscodehints.detectedExclusions": [
+        "/Users/frankwang/hybrid/FrankTest/www/app/contact/contact-list-ctrl.js",
+        "/Users/frankwang/hybrid/FrankTest/platforms/android/build/intermediates/assets/debug/www/plugins/cordova-plugin-device/www/device.js",
+        "/Users/frankwang/hybrid/FrankTest/www/app/contact/contact-controller.js",
+        "/Users/frankwang/hybrid/FrankTest/platforms/android/build/intermediates/assets/debug/www/lib/ionic/js/ionic.js",
+        "/Users/frankwang/hybrid/FrankTest/platforms/android/build/intermediates/assets/debug/www/lib/ionic/js/ionic.bundle.min.js",
+        "/Users/frankwang/hybrid/FrankTest/platforms/android/build/intermediates/assets/debug/www/plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+        "/Users/frankwang/hybrid/FrankTest/platforms/android/build/intermediates/assets/debug/www/plugins/cordova-plugin-statusbar/www/statusbar.js",
+        "/Users/frankwang/hybrid/FrankTest/platforms/android/build/intermediates/assets/debug/www/plugins/cordova-plugin-whitelist/whitelist.js",
+        "/Users/frankwang/hybrid/FrankTest/platforms/android/build/intermediates/assets/debug/www/plugins/ionic-plugin-keyboard/www/android/keyboard.js",
+        "/Users/frankwang/hybrid/FrankTest/platforms/android/build/intermediates/assets/x86/debug/www/cordova-js-src/android/promptbasednativeapi.js"
+    ]
+}
