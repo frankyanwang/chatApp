@@ -12,6 +12,9 @@
         var vm = this;
         vm.property = 'AccountListController';
 
+                alert("Account Test");
+        
+        console.log("Account Frank is here");
 
         activate();
 

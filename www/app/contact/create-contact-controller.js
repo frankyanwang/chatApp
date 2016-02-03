@@ -3,14 +3,14 @@
 
     angular
         .module('vlocityApp')
-        .controller('createContactController', createContactController);
+        .controller('CreateContactController', CreateContactController);
 
-    createContactController.$inject = ['force', '$ionicHistory'];
+    CreateContactController.$inject = ['force', '$ionicHistory'];
 
     /* @ngInject */
-    function createContactController(force, $ionicHistory) {
+    function CreateContactController(force, $ionicHistory) {
         var vm = this;
-        vm.property = 'createContactController';
+        vm.property = 'CreateContactController';
         vm.contact = {};
 
         vm.save = function () {

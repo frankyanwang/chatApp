@@ -3,14 +3,14 @@
 
     angular
         .module('vlocityApp')
-        .controller('editContactController', editContactController);
+        .controller('EditContactController', EditContactController);
 
-    editContactController.$inject = ['$stateParams', 'force', '$ionicHistory'];
+    EditContactController.$inject = ['$stateParams', 'force', '$ionicHistory'];
 
     /* @ngInject */
-    function editContactController($stateParams, force, $ionicHistory) {
+    function EditContactController($stateParams, force, $ionicHistory) {
         var vm = this;
-        vm.property = 'editContactController';
+        vm.property = 'EditContactController';
 
         vm.save = function () {
             force.update('contact', vm.contact).then(

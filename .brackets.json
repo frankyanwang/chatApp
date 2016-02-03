@@ -9,6 +9,8 @@
         "/Users/frankwang/hybrid/FrankTest/platforms/android/build/intermediates/assets/debug/www/plugins/cordova-plugin-statusbar/www/statusbar.js",
         "/Users/frankwang/hybrid/FrankTest/platforms/android/build/intermediates/assets/debug/www/plugins/cordova-plugin-whitelist/whitelist.js",
         "/Users/frankwang/hybrid/FrankTest/platforms/android/build/intermediates/assets/debug/www/plugins/ionic-plugin-keyboard/www/android/keyboard.js",
-        "/Users/frankwang/hybrid/FrankTest/platforms/android/build/intermediates/assets/x86/debug/www/cordova-js-src/android/promptbasednativeapi.js"
+        "/Users/frankwang/hybrid/FrankTest/platforms/android/build/intermediates/assets/x86/debug/www/cordova-js-src/android/promptbasednativeapi.js",
+        "/Users/frankwang/hybrid/chatApp/platforms/android/build/intermediates/assets/debug/www/plugins/cordova-plugin-statusbar/www/statusbar.js",
+        "/Users/frankwang/hybrid/chatApp/platforms/android/build/intermediates/assets/debug/www/plugins/cordova-plugin-whitelist/whitelist.js"
     ]
 }
