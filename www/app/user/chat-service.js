@@ -12,15 +12,17 @@
         
         
         var exports = {
-            func: func
+            chatFromUsers: getChatFromUsers
         };
-        
 
         return exports;
 
         ////////////////
 
-        function func() {
+        function getChatFromUsers(userId1, userId2) {
+            var path = userId1 < userId2 ? userId1 + '/' + userId2 : userId2 + '/' + userId1;
+            
+            return $firebaseArray(userChatRef.child(path));
         }
     }
 })();

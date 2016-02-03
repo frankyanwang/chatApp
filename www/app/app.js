@@ -118,7 +118,17 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config'])
         views: {
             'menuContent': {
                 controller: "UserListController as userListController",
-                templateUrl: baseURL + "app/user/user-list.html",
+                templateUrl: baseURL + "app/user/user-list.html"
+            }
+        }
+    })
+    
+    .state('app.chat',{
+        url: "/{userId}/chat",
+        views: {
+            'menuContent': {
+                controller: "ChatController as chatController",
+                templateUrl: baseURL + "app/user/chat.html"
             }
         }
     });

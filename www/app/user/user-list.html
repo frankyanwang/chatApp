@@ -13,7 +13,7 @@
 
     <ion-content class="has-header">
         <ion-list>
-            <ion-item ng-repeat="user in userListController.users" href="#/app/users/{{user.Id}}">
+            <ion-item ng-repeat="user in userListController.users" href="#/app/{{user.Id}}/chat">
                 {{user.Name}}
                 <p>{{user.UserRole.Name}}</p>
             </ion-item>

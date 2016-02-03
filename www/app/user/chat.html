@@ -1,0 +1,10 @@
+<div ng-repeat="chat in chatController.chats">
+    {{chat.email}} - {{chat.body}}
+</div>
+
+<div class="input-group">
+    <input type="text" class="form-control" ng-model="chatController.currentChat">
+    <span class="input-group-btn">
+      <button class="btn btn-default" type="button" ng-click="chatController.sendMessage()">Send</button>
+    </span>
+</div>
