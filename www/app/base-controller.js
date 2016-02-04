@@ -5,10 +5,10 @@
         .module('vlocityApp')
         .controller('baseController', baseController);
 
-    baseController.$inject = ['force','$scope'];
+    baseController.$inject = ['force','$scope','$rootScope'];
 
     /* @ngInject */
-    function baseController(force, $scope) {
+    function baseController(force, $scope, $rootScope) {
         var vm = this;
         vm.property = 'baseController';
 
@@ -22,6 +22,12 @@
 
         ////////////////
 
-        function activate() {}
+        function activate() {
+            console.log('Current User ID: ' + force.getUserId());
+            $rootScope.currentUser = {
+                id: force.getUserId(),
+                email: 'sissi@cmtdemo.com'
+            };
+        }
     }
 })();

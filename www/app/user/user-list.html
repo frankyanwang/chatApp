@@ -1,11 +1,11 @@
 <!--<ion-view view-title="My Users" ng-controller="UserListController as vm">-->
 <ion-view view-title="My Users">
 
-     <ion-nav-buttons side="left">
+    <ion-nav-buttons side="left">
         <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
-    </ion-nav-buttons> 
+    </ion-nav-buttons>
 
-<!--
+    <!--
     <ion-nav-buttons side="right">
         <a class="button button-clear ion-ios-plus" href="#/app/create-contact"></a>
     </ion-nav-buttons>
@@ -13,7 +13,8 @@
 
     <ion-content class="has-header">
         <ion-list>
-            <ion-item ng-repeat="user in userListController.users" href="#/app/{{user.Id}}/chat">
+            <!--            <ion-item ng-repeat="user in userListController.users" href="#/app/{{user.Id}}/chat">-->
+            <ion-item ng-repeat="user in userListController.users" ui-sref="app.chat({userId: user.Id, userName: user.Name})">
                 {{user.Name}}
                 <p>{{user.UserRole.Name}}</p>
             </ion-item>

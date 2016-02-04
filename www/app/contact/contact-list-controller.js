@@ -11,7 +11,10 @@
     function ContactListController(force) {
         var vm = this;
         vm.property = 'ContactListController';
-        
+
+        console.log("==ContactListController==");
+
+
         activate();
 
         ////////////////

@@ -1,10 +1,56 @@
-<div ng-repeat="chat in chatController.chats">
-    {{chat.email}} - {{chat.body}}
-</div>
+<ion-view view-title="Conversation">
+    <ion-nav-title>
+        {{chatController.chatUserName}}
+    </ion-nav-title>    
 
-<div class="input-group">
-    <input type="text" class="form-control" ng-model="chatController.currentChat">
-    <span class="input-group-btn">
-      <button class="btn btn-default" type="button" ng-click="chatController.sendMessage()">Send</button>
-    </span>
-</div>
+    <!--
+     <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons> 
+-->
+
+    <!--
+    <ion-nav-buttons side="right">
+        <a class="button button-clear ion-ios-plus" href="#/app/create-contact"></a>
+    </ion-nav-buttons>
+-->
+
+    <ion-content class="has-header direct-chat">
+        <!--
+        <ion-list>
+            <ion-item ng-repeat="user in userListController.users" href="#/app/{{user.Id}}/chat">
+                {{user.Name}}
+                <p>{{user.UserRole.Name}}</p>
+            </ion-item>
+        </ion-list>
+-->
+
+        <!--
+        <div ng-repeat="chat in chatController.chats">
+            {{chat.email}} - {{chat.body}}
+        </div>
+-->
+
+        <div ng-repeat="chat in chatController.chats" ng-class="{other: chat.userId == chatController.myId}" class="messages">
+
+            <div class="message" ng-class="{'slide-right': chatController.hideTime, '': !chatController.hideTime}">
+                <span>{{chat.body}}</span>
+            </div>
+
+            <div class="time" ng-class="{'slide-right': chatController.hideTime, '': !chatController.hideTime}">{{chat.timestamp | date:'short'}}</div>
+
+        </div>
+        
+        <ion-footer-bar class="bar-stable item-input-inset">
+            <label class="item-input-wrapper">
+                <input type="text" placeholder="Type your message" ng-model="chatController.currentChat"/>
+            </label>
+            <button class="button button-clear" type="button" ng-click="chatController.sendMessage()">
+                Send
+            </button>
+        </ion-footer-bar>
+
+
+    </ion-content>
+
+</ion-view>

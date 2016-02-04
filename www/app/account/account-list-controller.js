@@ -11,10 +11,8 @@
     function AccountListController(force) {
         var vm = this;
         vm.property = 'AccountListController';
-
-                alert("Account Test");
         
-        console.log("Account Frank is here");
+        console.log("==AccountListController==");
 
         activate();
 

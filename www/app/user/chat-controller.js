@@ -13,26 +13,35 @@
         vm.property = 'ChatController';
         // model bind to template
         vm.currentChat = '';
-
-        vm.sendMessage = function(){
-            if(vm.chat.length > 0){
-                vm.chats.$add({
-                    userId: $rootScope.currentUser.id,
-                    email: $rootScope.currentUser.email,
-                    body: vm.currentChat,
-                    timestamp: Firebase.ServerValue.TIMESTAMP
-                }).then(function(){
-                    vm.currentChat = '';
-                });
-            }
-        }
+        vm.myId = $rootScope.currentUser.Id;
+        vm.hideTime = true;
         
+        vm.chatUserName = $stateParams.userName;
+        vm.chatUserId = $stateParams.userId;
+        
+        vm.sendMessage = function () {
+            if (!vm.currentChat || vm.currentChat.length == 0) {
+                return;
+            }
+
+            vm.chats.$add({
+                userId: $rootScope.currentUser.Id,
+                name: $rootScope.currentUser.Name,
+                email: $rootScope.currentUser.Email,
+                body: vm.currentChat,
+                timestamp: Firebase.ServerValue.TIMESTAMP
+            }).then(function () {
+                vm.currentChat = '';
+            });
+
+        }
+
         activate();
 
         ////////////////
 
         function activate() {
-            vm.chats = chatFactory.chatFromUsers($stateParams.userId, $rootScope.currentUser.id)
+            vm.chats = chatFactory.chatFromUsers(vm.chatUserId, $rootScope.currentUser.Id)
         }
     }
 })();

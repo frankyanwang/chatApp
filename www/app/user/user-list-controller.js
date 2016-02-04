@@ -11,11 +11,8 @@
     function UserListController(force){
         var vm = this;
         vm.property = 'UserListController';
-        
 
-        alert("Test");
-        
-        console.log("Frank is here");
+        console.log("== UserListController ==");
         
         activate();
 

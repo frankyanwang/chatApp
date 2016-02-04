@@ -4,9 +4,9 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('vlocityApp', ['ionic', 'forceng', 'config'])
+angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase'])
 
-.run(function ($ionicPlatform, $state, force, forcengOptions) {
+.run(function ($rootScope, $ionicPlatform, $state, force, forcengOptions) {
 
     $ionicPlatform.ready(function () {
 
@@ -33,6 +33,13 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config'])
             // Mobile SDK, login first.)
             force.login().then(
                 function () {
+                    console.log('AppJS Current User ID: ' + force.getUserId());
+
+                    force.retrieve('user', force.getUserId(), 'id, name, email').then(
+                        function (user) {
+                            console.log("Current User: " + user);
+                            $rootScope.currentUser = user;
+                        });
                     $state.go('app.contactlist');
                 },
                 function (error) {
@@ -45,95 +52,96 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config'])
 
 .config(function ($stateProvider, $urlRouterProvider, baseURL) {
 
-    // baseURL (defined in the config.js module) is only there to support running the same app as a Mobile SDK
-    // hybrid local and hybrid remote app (where the app is run from withing a Visualforce page). When running the
-    // app inside a Visualforce page, you have to account for the path of the app's static resource. To accomplish
-    // that, you create the config module from within the VF page (as opposed to importing config.js), and set
-    // baseURL to the app's static resource path.
+        // baseURL (defined in the config.js module) is only there to support running the same app as a Mobile SDK
+        // hybrid local and hybrid remote app (where the app is run from withing a Visualforce page). When running the
+        // app inside a Visualforce page, you have to account for the path of the app's static resource. To accomplish
+        // that, you create the config module from within the VF page (as opposed to importing config.js), and set
+        // baseURL to the app's static resource path.
 
-    $stateProvider
+        $stateProvider
 
-        .state('app', {
-        url: "/app",
-        abstract: true,
-        templateUrl: baseURL + "app/layout/menu-layout.html",
-    })
+            .state('app', {
+            url: "/app",
+            abstract: true,
+            templateUrl: baseURL + "app/layout/menu-layout.html",
+        })
 
-    .state('app.contactlist', {
-        url: "/contactlist",
-        views: {
-            'menuContent': {
-                templateUrl: baseURL + "app/contact/contact-list.html",
+        .state('app.contactlist', {
+            url: "/contactlist",
+            views: {
+                'menuContent': {
+                    templateUrl: baseURL + "app/contact/contact-list.html",
+                }
             }
-        }
-    })
+        })
 
-    .state('app.contact', {
-        url: "/contacts/:contactId",
-        views: {
-            'menuContent': {
-                templateUrl: baseURL + "app/contact/contact.html",
+        .state('app.contact', {
+            url: "/contacts/:contactId",
+            views: {
+                'menuContent': {
+                    templateUrl: baseURL + "app/contact/contact.html",
+                }
             }
-        }
-    })
+        })
 
-    .state('app.edit-contact', {
-        url: "/edit-contact/:contactId",
-        views: {
-            'menuContent': {
-                templateUrl: baseURL + "app/contact/edit-contact.html",
+        .state('app.edit-contact', {
+            url: "/edit-contact/:contactId",
+            views: {
+                'menuContent': {
+                    templateUrl: baseURL + "app/contact/edit-contact.html",
+                }
             }
-        }
-    })
+        })
 
-    .state('app.add-contact', {
-        url: "/create-contact",
-        views: {
-            'menuContent': {
-                templateUrl: baseURL + "app/contact/edit-contact.html",
+        .state('app.add-contact', {
+            url: "/create-contact",
+            views: {
+                'menuContent': {
+                    templateUrl: baseURL + "app/contact/edit-contact.html",
+                }
             }
-        }
-    })
+        })
 
-    .state('app.accountlist', {
-        url: "/accountlist",
-        views: {
-            'menuContent': {
-                templateUrl: baseURL + "app/account/account-list.html",
+        .state('app.accountlist', {
+            url: "/accountlist",
+            views: {
+                'menuContent': {
+                    templateUrl: baseURL + "app/account/account-list.html",
+                }
             }
-        }
-    })
+        })
 
-    .state('app.account', {
-        url: "/accounts/:accountId",
-        views: {
-            'menuContent': {
-                templateUrl: baseURL + "app/account/account.html",
+        .state('app.account', {
+            url: "/accounts/:accountId",
+            views: {
+                'menuContent': {
+                    templateUrl: baseURL + "app/account/account.html",
+                }
             }
-        }
-    })
+        })
 
-    .state('app.userlist', {
-        url: "/userlist",
-        views: {
-            'menuContent': {
-                controller: "UserListController as userListController",
-                templateUrl: baseURL + "app/user/user-list.html"
+        .state('app.userlist', {
+            url: "/userlist",
+            views: {
+                'menuContent': {
+                    controller: "UserListController as userListController",
+                    templateUrl: baseURL + "app/user/user-list.html"
+                }
             }
-        }
-    })
-    
-    .state('app.chat',{
-        url: "/{userId}/chat",
-        views: {
-            'menuContent': {
-                controller: "ChatController as chatController",
-                templateUrl: baseURL + "app/user/chat.html"
+        })
+
+        .state('app.chat', {
+            url: "/{userId}/chat",
+            params : { userName: null },
+            views: {
+                'menuContent': {
+                    controller: "ChatController as chatController",
+                    templateUrl: baseURL + "app/user/chat.html"
+                }
             }
-        }
-    });
+        });
 
-    $urlRouterProvider.otherwise('/');
+        $urlRouterProvider.otherwise('/');
 
-})
-.constant('FirebaseUrl', 'https://sweltering-fire-1111.firebaseio.com/');
+    })
+    .constant('FirebaseUrl', 'https://sweltering-fire-1111.firebaseio.com/');
