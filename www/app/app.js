@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase'])
 
-.run(function ($rootScope, $ionicPlatform, $state, force, forcengOptions) {
+.run(function ($rootScope, $ionicPlatform, $state, force, forcengOptions, chatFactory) {
 
     $ionicPlatform.ready(function () {
 
@@ -39,6 +39,9 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase'])
                         function (user) {
                             console.log("Current User: " + user);
                             $rootScope.currentUser = user;
+
+                            chatFactory.setOnline($rootScope.currentUser.Id);
+
                         });
                     $state.go('app.contactlist');
                 },
@@ -132,7 +135,9 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase'])
 
         .state('app.chat', {
             url: "/{userId}/chat",
-            params : { userName: null },
+            params: {
+                userName: null
+            },
             views: {
                 'menuContent': {
                     controller: "ChatController as chatController",

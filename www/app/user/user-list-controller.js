@@ -5,14 +5,16 @@
         .module('vlocityApp')
         .controller('UserListController', UserListController);
 
-    UserListController.$inject = ['force'];
+    UserListController.$inject = ['force', 'chatFactory'];
 
     /* @ngInject */
-    function UserListController(force){
+    function UserListController(force, chatFactory){
         var vm = this;
         vm.property = 'UserListController';
 
         console.log("== UserListController ==");
+        
+        vm.isUserOnline = chatFactory.isUserOnline;
         
         activate();
 

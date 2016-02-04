@@ -11,11 +11,13 @@
     </ion-nav-buttons>
 -->
 
-    <ion-content class="has-header">
+    <ion-content class="has-header user-list">
         <ion-list>
             <!--            <ion-item ng-repeat="user in userListController.users" href="#/app/{{user.Id}}/chat">-->
             <ion-item ng-repeat="user in userListController.users" ui-sref="app.chat({userId: user.Id, userName: user.Name})">
-                {{user.Name}}
+                {{user.Name}} 
+                
+                <span class="presence" ng-class="{online: userListController.isUserOnline(user.Id)}"></span>
                 <p>{{user.UserRole.Name}}</p>
             </ion-item>
         </ion-list>
