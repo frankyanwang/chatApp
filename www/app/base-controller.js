@@ -24,10 +24,10 @@
 
         function activate() {
             console.log('Current User ID: ' + force.getUserId());
-            $rootScope.currentUser = {
-                id: force.getUserId(),
-                email: 'sissi@cmtdemo.com'
-            };
+//            $rootScope.currentUser = {
+//                id: force.getUserId(),
+//                email: 'sissi@cmtdemo.com'
+//            };
         }
     }
 })();
