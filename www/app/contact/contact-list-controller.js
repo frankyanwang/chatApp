@@ -5,10 +5,10 @@
         .module('vlocityApp')
         .controller('ContactListController', ContactListController);
 
-    ContactListController.$inject = ['force'];
+    ContactListController.$inject = ['configOptions', 'force', '$http'];
 
     /* @ngInject */
-    function ContactListController(force) {
+    function ContactListController(configOptions, force, $http) {
         var vm = this;
         vm.property = 'ContactListController';
 
@@ -23,6 +23,17 @@
             force.query('select id, name, title from contact limit 50').then(
                 function (data) {
                     vm.contacts = data.records;
+
+                    vm.displayAvatar = configOptions.displayAvatar;
+                    if (configOptions.displayAvatar) {
+                        angular.forEach(vm.contacts, function (value, key) {
+                            $http.get("http://uifaces.com/api/v1/random").then(function (response) {
+                                console.log(response);
+                                // epic, bigger, normal, mini
+                                value.imgUrl = response.data.image_urls.bigger;
+                            });
+                        });
+                    }
                 },
                 function (error) {
                     alert("Error Retrieving Contacts");

@@ -10,7 +10,8 @@
 
     <ion-content class="has-header">
         <ion-list>
-            <ion-item ng-repeat="contact in vm.contacts" href="#/app/contacts/{{contact.Id}}">
+            <ion-item class="item" ng-class="{'item-avatar': vm.displayAvatar}" ng-repeat="contact in vm.contacts" href="#/app/contacts/{{contact.Id}}">
+                <img ng-show="vm.displayAvatar" src="{{contact.imgUrl}}">
                 {{contact.Name}}
                 <p>{{contact.Title}}</p>
             </ion-item>
