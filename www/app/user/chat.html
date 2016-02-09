@@ -35,24 +35,23 @@
 
             <div class="message">
                 <img class='chat-image other chat-image-default' ng-if="chat.userId != chatController.myId" src='https://lh3.googleusercontent.com/-553dkjYDnhs/AAAAAAAAAAI/AAAAAAAAAB4/Ts9dxqVAhYA/s120-c/photo.jpg' />
-                <img class='chat-image chat-image-default' ng-if="chat.userId == chatController.myId" src='https://lh3.googleusercontent.com/-sGhYlzsAcPY/VDhVBt0-F_I/AAAAAAAAACA/iuUW2PcXqbU/s264-no/10554144_296305277214505_836031705_a.jpg' />               
+                <img class='chat-image chat-image-default' ng-if="chat.userId == chatController.myId" src='https://lh3.googleusercontent.com/-sGhYlzsAcPY/VDhVBt0-F_I/AAAAAAAAACA/iuUW2PcXqbU/s264-no/10554144_296305277214505_836031705_a.jpg' />
                 <span>{{chat.body}}</span>
-            </div>          
+            </div>
 
-<!--            <div class="time" ng-class="{'slide-right': chatController.hideTime, '': !chatController.hideTime}">{{chat.timestamp | date:'short'}}</div>-->
+            <!--            <div class="time" ng-class="{'slide-right': chatController.hideTime, '': !chatController.hideTime}">{{chat.timestamp | date:'short'}}</div>-->
 
         </div>
-
-        <ion-footer-bar class="bar-stable item-input-inset">
-            <label class="item-input-wrapper">
-                <input type="text" placeholder="Type your message" ng-model="chatController.currentChat" />
-            </label>
-            <button class="button button-clear" type="button" ng-click="chatController.sendMessage()">
+    </ion-content>
+    <ion-footer-bar keyboard-attach class="bar-stable item-input-inset message-footer">
+        <label class="item-input-wrapper">
+            <input type="text" placeholder="Type your message" ng-model="chatController.currentChat" />
+        </label>
+        <div class="footer-btn-wrap">
+            <button class="button button-clear" type="button" ng-click="chatController.sendMessage()" ng-disabled="!chatController.currentChat || chatController.currentChat === ''">
                 Send
             </button>
-        </ion-footer-bar>
-
-
-    </ion-content>
+        </div>
+    </ion-footer-bar>
 
 </ion-view>
