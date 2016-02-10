@@ -7,8 +7,24 @@
         <a class="button button-clear" href="#/app/edit-contact/{{vm.contact.Id}}">Edit</a>
     </ion-nav-buttons>
 
-    <ion-content class="has-header">
+    <ion-content class="has-header contact-detail">
         <div class="list card">
+            <ion-item class="profile-item">
+                <div class="banner">
+                </div>
+                <div class="profile-picture big-profile-picture">
+                    <img src="{{vm.contact.imgUrl}}">
+                </div>                
+                <h2 class="profile-name dark">{{vm.contact.Name}}</h2>
+                <div class="profile-info">{{vm.contact.Title}}</div>
+                <div class="profile-info">{{vm.contact.Phone}}</div>
+                <div class="profile-info">{{vm.contact.MobilePhone}}</div>
+                <div class="profile-info">{{vm.contact.Email}}</div>
+
+            </ion-item>
+
+
+            <!--
             <div class="item">
                 <h2>{{vm.contact.Name}}</h2>
                 <h2>{{vm.contact.Title}}</h2>
@@ -29,6 +45,7 @@
                 <i class="icon ion-ios-email"></i>Email
                 <p>{{vm.contact.Email}}</p>
             </a>
+-->
         </div>
     </ion-content>
 
