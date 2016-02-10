@@ -14,38 +14,26 @@
                 </div>
                 <div class="profile-picture big-profile-picture">
                     <img ng-src="{{vm.contact.imgUrl}}">
-                </div>                
+                </div>
                 <h2 class="profile-name dark">{{vm.contact.Name}}</h2>
                 <div class="profile-info">{{vm.contact.Title}}</div>
-                <div class="profile-info">{{vm.contact.Phone}}</div>
-                <div class="profile-info">{{vm.contact.MobilePhone}}</div>
-                <div class="profile-info">{{vm.contact.Email}}</div>
+
+                <div class="profile-action button-bar bar-calm">
+                    <a class="button" ng-show="vm.contact.Phone" href="tel:{{vm.contact.Phone}}">
+                       <i class="icon ion-ios-telephone"></i> office
+                    </a>
+                    <a class="button" ng-show="vm.contact.Phone" href="sms:{{vm.contact.Phone}}">
+                       <i class="icon ion-ios-chatbubble"></i> SMS
+                    </a>                    
+                    <a class="button" ng-show="vm.contact.MobilePhone" href="tel:{{vm.contact.MobilePhone}}">
+                        <i class="icon ion-ios-telephone"></i> mobile
+                    </a>
+                    <a class="button" ng-show="vm.contact.Email" href="mailto:{{vm.contact.Email}}">
+                        <i class="icon ion-ios-email"></i> email
+                    </a>
+                </div>
 
             </ion-item>
-
-
-            <!--
-            <div class="item">
-                <h2>{{vm.contact.Name}}</h2>
-                <h2>{{vm.contact.Title}}</h2>
-            </div>
-            <a class="item item-icon-left" href="tel:{{vm.contact.Phone}}">
-                <i class="icon ion-ios-telephone"></i>Call Office
-                <p>{{vm.contact.Phone}}</p>
-            </a>
-            <a class="item item-icon-left" href="tel:{{vm.contact.MobilePhone}}">
-                <i class="icon ion-ios-telephone"></i>Call Mobile
-                <p>{{vm.contact.MobilePhone}}</p>
-            </a>
-            <a class="item item-icon-left" href="sms:{{vm.contact.MobilePhone}}">
-                <i class="icon ion-ios-chatbubble"></i>SMS
-                <p>{{vm.contact.MobilePhone}}</p>
-            </a>
-            <a class="item item-icon-left" href="mailto:{{vm.contact.Email}}">
-                <i class="icon ion-ios-email"></i>Email
-                <p>{{vm.contact.Email}}</p>
-            </a>
--->
         </div>
     </ion-content>
 

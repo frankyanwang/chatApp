@@ -1,3 +1,5 @@
+/* chat message */
+
 .direct-chat .scroll {
     padding: 10px 0 50px !important;
 }
@@ -77,6 +79,67 @@
     height: 40px;
 }
 
+
+/* contact card in chat */
+
+.direct-chat .profile-item {
+    text-align: center;
+}
+
+.direct-chat .banner {
+    z-index: 2;
+    position: relative;
+    width: 100%;
+    height: 100px;
+    background-image: url("https://snap-photos.s3.amazonaws.com/img-thumbs/960w/RQ2Z75PQIN.jpg");
+    background-size: cover;
+    border-bottom: solid 1px lightgrey;
+    -webkit-transition: all 0.7s ease-in-out;
+    -moz-transition: all 0.7s ease-in-out;
+    -o-transition: all 0.7s ease-in-out;
+    -ms-transition: all 0.7s ease-in-out;
+}
+
+.direct-chat .profile-picture {
+    z-index: 3;
+    /* border: 1px solid rgba(0, 0, 0, 0.25); */
+    padding: 3px;
+    border-radius: 100%;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    margin: 0 auto;
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    position: relative;
+    margin-top: -60px;
+}
+
+.direct-chat .profile-picture img {
+    width: 80px;
+    border-radius: 100%;
+}
+
+.direct-chat .profile-name {
+    padding-top: 0px;
+    font-size: x-large !important;
+    font-weight: bold !important;
+    text-transform: capitalize;
+}
+
+.direct-chat .card.contact-card-other {
+    margin-right: 50px;
+    margin-left: 70px;
+}
+
+.direct-chat .card.contact-card {
+    margin-right: 70px;
+    margin-left: 50px;
+}
+
+/* user list*/
+
 .user-list .presence {
     border-radius: 50%;
     display: inline-block;
@@ -94,6 +157,20 @@
 
 .contact-detail .profile-item {
     text-align: center;
+}
+
+.contact-detail .banner {
+    z-index: 2;
+    position: relative;
+    width: 100%;
+    height: 200px;
+    background-image: url("https://snap-photos.s3.amazonaws.com/img-thumbs/960w/RQ2Z75PQIN.jpg");
+    background-size: cover;
+    border-bottom: solid 1px lightgrey;
+    -webkit-transition: all 0.7s ease-in-out;
+    -moz-transition: all 0.7s ease-in-out;
+    -o-transition: all 0.7s ease-in-out;
+    -ms-transition: all 0.7s ease-in-out;
 }
 
 .contact-detail .profile-picture {
@@ -124,16 +201,6 @@
     text-transform: capitalize;
 }
 
-.contact-detail .banner {
-    z-index: 2;
-    position: relative;
-    width: 100%;
-    height: 200px;
-    background-image: url("https://snap-photos.s3.amazonaws.com/img-thumbs/960w/RQ2Z75PQIN.jpg");
-    background-size: cover;
-    border-bottom: solid 1px lightgrey;
-    -webkit-transition: all 0.7s ease-in-out;
-    -moz-transition: all 0.7s ease-in-out;
-    -o-transition: all 0.7s ease-in-out;
-    -ms-transition: all 0.7s ease-in-out;
+.contact-detail .profile-action {
+    margin-top: 25px;
 }

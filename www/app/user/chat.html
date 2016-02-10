@@ -1,7 +1,6 @@
 <ion-view view-title="Conversation">
     <ion-nav-title>
-        <i class='icon ion-chatbubbles'></i>        
-        {{chatController.chatUserName}}
+        <i class='icon ion-chatbubbles'></i> {{chatController.chatUserName}}
     </ion-nav-title>
 
     <!--
@@ -32,17 +31,83 @@
         </div>
 -->
 
-        <div ng-repeat="chat in chatController.chats" ng-class="{other: chat.userId == chatController.myId}" class="messages">
+        <div ng-repeat="chat in chatController.chats" ng-class="{other: chat.userId === chatController.myId}" class="messages">
 
-            <div class="message">
-                <img class='chat-image other chat-image-default' ng-if="chat.userId != chatController.myId" src='https://lh3.googleusercontent.com/-553dkjYDnhs/AAAAAAAAAAI/AAAAAAAAAB4/Ts9dxqVAhYA/s120-c/photo.jpg' />
-                <img class='chat-image chat-image-default' ng-if="chat.userId == chatController.myId" src='https://lh3.googleusercontent.com/-sGhYlzsAcPY/VDhVBt0-F_I/AAAAAAAAACA/iuUW2PcXqbU/s264-no/10554144_296305277214505_836031705_a.jpg' />
-                <span>{{chat.body}}</span>
+            <div class="message" ng-if="chat.userId === chatController.myId">
+                <img class='chat-image chat-image-default' src='https://lh3.googleusercontent.com/-sGhYlzsAcPY/VDhVBt0-F_I/AAAAAAAAACA/iuUW2PcXqbU/s264-no/10554144_296305277214505_836031705_a.jpg' />
+
+                <div ng-if="chat.type === undefined || chat.type === 'MESSAGE'">
+                    <span>{{chat.body}}</span>
+                </div>
+                <div ng-if="chat.type === 'CONTACT'">
+                    <div class="list card contact-card">
+                        <ion-item class="profile-item">
+                            <div class="banner">
+                            </div>
+                            <div class="profile-picture big-profile-picture">
+                                <img ng-src="https://lh3.googleusercontent.com/-553dkjYDnhs/AAAAAAAAAAI/AAAAAAAAAB4/Ts9dxqVAhYA/s120-c/photo.jpg">
+                            </div>
+                            <h2 class="profile-name dark">{{chat.contact.Name}}</h2>
+                            <div class="profile-info">{{chat.contact.Title}}</div>
+                            <div class="profile-info">{{chat.contact.Phone}}</div>
+                            <div class="profile-info">{{chat.contact.MobilePhone}}</div>
+                            <div class="profile-info">{{chat.contact.Email}}</div>
+                        </ion-item>
+                    </div>
+                </div>
             </div>
 
-            <!--            <div class="time" ng-class="{'slide-right': chatController.hideTime, '': !chatController.hideTime}">{{chat.timestamp | date:'short'}}</div>-->
+            <div class="message" ng-if="chat.userId !== chatController.myId">
+                <img class='chat-image other chat-image-default' src='https://lh3.googleusercontent.com/-553dkjYDnhs/AAAAAAAAAAI/AAAAAAAAAB4/Ts9dxqVAhYA/s120-c/photo.jpg' />
 
+                <div ng-if="chat.type === undefined || chat.type === 'MESSAGE'">
+                    <span>{{chat.body}}</span>
+                </div>
+                <div ng-if="chat.type === 'CONTACT'">
+                    <div class="list card contact-card-other">
+                        <ion-item class="profile-item">
+                            <div class="banner">
+                            </div>
+                            <div class="profile-picture big-profile-picture">
+                                <!--                                <img ng-src="https://lh3.googleusercontent.com/-553dkjYDnhs/AAAAAAAAAAI/AAAAAAAAAB4/Ts9dxqVAhYA/s120-c/photo.jpg">-->
+                                <img ng-src="chat.contact.imgUrl" />
+                            </div>
+                            <h2 class="profile-name dark">{{chat.contact.Name}}</h2>
+                            <div class="profile-info">{{chat.contact.Title}}</div>
+                            <div class="profile-info">{{chat.contact.Phone}}</div>
+                            <div class="profile-info">{{chat.contact.MobilePhone}}</div>
+                            <div class="profile-info">{{chat.contact.Email}}</div>
+
+                        </ion-item>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <!--
+        <div class="messages">
+            <div class="message">
+                <img class='chat-image chat-image-default' src='https://lh3.googleusercontent.com/-sGhYlzsAcPY/VDhVBt0-F_I/AAAAAAAAACA/iuUW2PcXqbU/s264-no/10554144_296305277214505_836031705_a.jpg' />
+
+                <div class="list card contact-card-other">
+                    <ion-item class="profile-item">
+                        <div class="banner">
+                        </div>
+                        <div class="profile-picture big-profile-picture">
+                            <img ng-src="https://lh3.googleusercontent.com/-553dkjYDnhs/AAAAAAAAAAI/AAAAAAAAAB4/Ts9dxqVAhYA/s120-c/photo.jpg">
+                        </div>
+                        <h2 class="profile-name dark">Frank Wang</h2>
+                        <div class="profile-info">VP of Engineer</div>
+                        <div class="profile-info">6505144588</div>
+                        <div class="profile-info">{{vm.contact.MobilePhone}}</div>
+                        <div class="profile-info">{{vm.contact.Email}}</div>
+
+                    </ion-item>
+                </div>
+            </div>
+        </div>
+-->
+
     </ion-content>
     <ion-footer-bar keyboard-attach class="bar-stable item-input-inset message-footer">
         <label class="item-input-wrapper">
