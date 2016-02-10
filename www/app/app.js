@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase'])
+angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodash'])
 
 .run(function ($rootScope, $ionicPlatform, $state, force, forcengOptions, chatFactory) {
 
