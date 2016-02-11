@@ -12,7 +12,7 @@
             <ion-item class="profile-item">
                 <div class="banner">
                 </div>
-                <div class="profile-picture big-profile-picture">
+                <div class="profile-picture big-profile-picture" ng-if="vm.contact.imgUrl">
                     <img ng-src="{{vm.contact.imgUrl}}">
                 </div>
                 <h2 class="profile-name dark">{{vm.contact.Name}}</h2>

@@ -5,7 +5,7 @@
         .module('vlocityApp')
         .controller('ContactController', ContactController);
 
-    ContactController.$inject = ['force', '$stateParams','$http'];
+    ContactController.$inject = ['force', '$stateParams', '$http'];
 
     /* @ngInject */
     function ContactController(force, $stateParams, $http) {

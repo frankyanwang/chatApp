@@ -5,10 +5,10 @@
         .module('vlocityApp')
         .controller('ChatController', ChatController);
 
-    ChatController.$inject = ['$stateParams', 'chatFactory', '$rootScope', 'force'];
+    ChatController.$inject = ['$stateParams', 'chatFactory', '$rootScope', 'force', '$http'];
 
     /* @ngInject */
-    function ChatController($stateParams, chatFactory, $rootScope, force) {
+    function ChatController($stateParams, chatFactory, $rootScope, force, $http) {
         var vm = this;
         vm.property = 'ChatController';
         // model bind to template
@@ -37,6 +37,7 @@
                             }
                             if (data.records.length == 1) {
                                 var contact = data.records[0];
+
                                 vm.chats.$add({
                                     userId: $rootScope.currentUser.Id,
                                     name: $rootScope.currentUser.Name,
@@ -44,8 +45,18 @@
                                     type: "CONTACT",
                                     contact: contact,
                                     timestamp: Firebase.ServerValue.TIMESTAMP
-                                }).then(function () {
+                                }).then(function (ref) {
                                     vm.currentChat = '';
+
+                                    var id = ref.key();
+                                    var addedChat = vm.chats.$getRecord(id);
+
+                                    $http.get("http://uifaces.com/api/v1/random").then(function (response) {
+                                        console.log(response);
+                                        // epic, bigger, normal, mini
+                                        addedChat.contact.imgUrl = response.data.image_urls.epic;
+                                    });
+
                                 });
                             } else {
                                 alert("Find more than one contact - " + contactName);
