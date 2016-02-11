@@ -3,33 +3,7 @@
         <i class='icon ion-chatbubbles'></i> {{chatController.chatUserName}}
     </ion-nav-title>
 
-    <!--
-     <ion-nav-buttons side="left">
-        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
-    </ion-nav-buttons> 
--->
-
-    <!--
-    <ion-nav-buttons side="right">
-        <a class="button button-clear ion-ios-plus" href="#/app/create-contact"></a>
-    </ion-nav-buttons>
--->
-
     <ion-content class="has-header direct-chat">
-        <!--
-        <ion-list>
-            <ion-item ng-repeat="user in userListController.users" href="#/app/{{user.Id}}/chat">
-                {{user.Name}}
-                <p>{{user.UserRole.Name}}</p>
-            </ion-item>
-        </ion-list>
--->
-
-        <!--
-        <div ng-repeat="chat in chatController.chats">
-            {{chat.email}} - {{chat.body}}
-        </div>
--->
 
         <div ng-repeat="chat in chatController.chats" ng-class="{other: chat.userId === chatController.myId}" class="messages">
 
@@ -84,30 +58,6 @@
                 </div>
             </div>
         </div>
-
-        <!--
-        <div class="messages">
-            <div class="message">
-                <img class='chat-image chat-image-default' src='https://lh3.googleusercontent.com/-sGhYlzsAcPY/VDhVBt0-F_I/AAAAAAAAACA/iuUW2PcXqbU/s264-no/10554144_296305277214505_836031705_a.jpg' />
-
-                <div class="list card contact-card-other">
-                    <ion-item class="profile-item">
-                        <div class="banner">
-                        </div>
-                        <div class="profile-picture big-profile-picture">
-                            <img ng-src="https://lh3.googleusercontent.com/-553dkjYDnhs/AAAAAAAAAAI/AAAAAAAAAB4/Ts9dxqVAhYA/s120-c/photo.jpg">
-                        </div>
-                        <h2 class="profile-name dark">Frank Wang</h2>
-                        <div class="profile-info">VP of Engineer</div>
-                        <div class="profile-info">6505144588</div>
-                        <div class="profile-info">{{vm.contact.MobilePhone}}</div>
-                        <div class="profile-info">{{vm.contact.Email}}</div>
-
-                    </ion-item>
-                </div>
-            </div>
-        </div>
--->
 
     </ion-content>
     <ion-footer-bar keyboard-attach class="bar-stable item-input-inset message-footer">

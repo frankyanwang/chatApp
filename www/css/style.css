@@ -126,6 +126,7 @@
     font-size: x-large !important;
     font-weight: bold !important;
     text-transform: capitalize;
+    padding: 5px;
 }
 
 .direct-chat .card.contact-card-other {
