@@ -129,14 +129,15 @@
 }
 
 .direct-chat .card.contact-card-other {
+    margin-right: 70px;
+    margin-left: 50px;
+}
+
+.direct-chat .card.contact-card {
     margin-right: 50px;
     margin-left: 70px;
 }
 
-.direct-chat .card.contact-card {
-    margin-right: 70px;
-    margin-left: 50px;
-}
 
 /* user list*/
 
