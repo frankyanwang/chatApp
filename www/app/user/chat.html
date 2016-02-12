@@ -7,14 +7,17 @@
 
         <div ng-repeat="chat in chatController.chats" ng-class="{other: chat.userId === chatController.myId}" class="messages">
 
-            <div class="message" ng-if="chat.userId === chatController.myId">
-                <img class='chat-image chat-image-default' src='https://lh3.googleusercontent.com/-sGhYlzsAcPY/VDhVBt0-F_I/AAAAAAAAACA/iuUW2PcXqbU/s264-no/10554144_296305277214505_836031705_a.jpg' />
+            <div class="message">
+                <img class='chat-image chat-image-default' ng-if="chat.userId === chatController.myId" src='https://lh3.googleusercontent.com/-sGhYlzsAcPY/VDhVBt0-F_I/AAAAAAAAACA/iuUW2PcXqbU/s264-no/10554144_296305277214505_836031705_a.jpg' />
+
+                <img class='chat-image other chat-image-default' ng-if="chat.userId !== chatController.myId" src='https://lh3.googleusercontent.com/-553dkjYDnhs/AAAAAAAAAAI/AAAAAAAAAB4/Ts9dxqVAhYA/s120-c/photo.jpg' />
+
 
                 <div ng-if="chat.type === undefined || chat.type === 'MESSAGE'">
                     <span>{{chat.body}}</span>
                 </div>
                 <div ng-if="chat.type === 'CONTACT'">
-                    <div class="list card contact-card">
+                    <div class="list card" ng-class="chat.userId === chatController.myId ? 'contact-card': 'contact-card-other'">
                         <ion-item class="profile-item">
                             <div class="banner">
                             </div>
@@ -24,35 +27,21 @@
                             </div>
                             <h2 class="profile-name dark">{{chat.contact.Name}}</h2>
                             <div class="profile-info">{{chat.contact.Title}}</div>
-                            <div class="profile-info">{{chat.contact.Phone}}</div>
-                            <div class="profile-info">{{chat.contact.MobilePhone}}</div>
-                            <div class="profile-info">{{chat.contact.Email}}</div>
-                        </ion-item>
-                    </div>
-                </div>
-            </div>
-
-            <div class="message" ng-if="chat.userId !== chatController.myId">
-                <img class='chat-image other chat-image-default' src='https://lh3.googleusercontent.com/-553dkjYDnhs/AAAAAAAAAAI/AAAAAAAAAB4/Ts9dxqVAhYA/s120-c/photo.jpg' />
-
-                <div ng-if="chat.type === undefined || chat.type === 'MESSAGE'">
-                    <span>{{chat.body}}</span>
-                </div>
-                <div ng-if="chat.type === 'CONTACT'">
-                    <div class="list card contact-card-other">
-                        <ion-item class="profile-item">
-                            <div class="banner">
+                            
+                            <div class="profile-action button-bar bar-calm">
+                                <a class="button" ng-show="chat.contact.Phone" href="tel:{{chat.contact.Phone}}">
+                                    <i class="icon ion-ios-telephone"></i>
+                                </a>
+                                <a class="button" ng-show="chat.contact.Phone" href="sms:{{chat.contact.Phone}}">
+                                    <i class="icon ion-ios-chatbubble"></i>
+                                </a>
+                                <a class="button" ng-show="chat.contact.MobilePhone" href="tel:{{chat.contact.MobilePhone}}">
+                                    <i class="icon ion-ios-telephone"></i>
+                                </a>
+                                <a class="button" ng-show="chat.contact.Email" href="mailto:{{chat.contact.Email}}">
+                                    <i class="icon ion-ios-email"></i>
+                                </a>
                             </div>
-                            <div class="profile-picture big-profile-picture" ng-if="chat.contact.imgUrl">
-                                <!--                                <img ng-src="https://lh3.googleusercontent.com/-553dkjYDnhs/AAAAAAAAAAI/AAAAAAAAAB4/Ts9dxqVAhYA/s120-c/photo.jpg">-->
-                                <img ng-src="chat.contact.imgUrl" />
-                            </div>
-                            <h2 class="profile-name dark">{{chat.contact.Name}}</h2>
-                            <div class="profile-info">{{chat.contact.Title}}</div>
-                            <div class="profile-info">{{chat.contact.Phone}}</div>
-                            <div class="profile-info">{{chat.contact.MobilePhone}}</div>
-                            <div class="profile-info">{{chat.contact.Email}}</div>
-
                         </ion-item>
                     </div>
                 </div>
