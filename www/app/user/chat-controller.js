@@ -55,13 +55,14 @@
                                 }).then(function (ref) {
                                     vm.currentChat = '';
 
-                                    var id = ref.key();
-                                    var addedChat = vm.chats.$getRecord(id);
+                                    var chatKey = ref.key();
+                                    var addedChat = vm.chats.$getRecord(chatKey);
 
                                     $http.get("http://uifaces.com/api/v1/random").then(function (response) {
                                         console.log(response);
                                         // epic, bigger, normal, mini
                                         addedChat.contact.imgUrl = response.data.image_urls.epic;
+                                        vm.chats.$save(addedChat);
                                     });
 
                                 });
