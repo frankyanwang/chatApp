@@ -5,17 +5,12 @@
         .module('vlocityApp')
         .controller('ContactListController', ContactListController);
 
-    ContactListController.$inject = ['configOptions', 'force', '$http', 'lodash'];
+    ContactListController.$inject = ['configOptions', 'force', '$http'];
 
     /* @ngInject */
-    function ContactListController(configOptions, force, $http, lodash) {
+    function ContactListController(configOptions, force, $http) {
         var vm = this;
-        vm.property = 'ContactListController';
-
-        console.log("==ContactListController==");
-        
-        var lo = lodash.assign({ 'a': 1 }, { 'b': 2 }, { 'c': 3 });
-        console.log("Lodash " + lo.b);
+        vm.property = 'ContactListController';        
 
         activate();
 

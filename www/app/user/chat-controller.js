@@ -5,10 +5,10 @@
         .module('vlocityApp')
         .controller('ChatController', ChatController);
 
-    ChatController.$inject = ['$stateParams', 'chatFactory', '$rootScope', 'force', '$http'];
+    ChatController.$inject = ['$stateParams', 'chatFactory', '$rootScope', 'force', '$http', 'lodash'];
 
     /* @ngInject */
-    function ChatController($stateParams, chatFactory, $rootScope, force, $http) {
+    function ChatController($stateParams, chatFactory, $rootScope, force, $http, lodash) {
         var vm = this;
         vm.property = 'ChatController';
         // model bind to template
@@ -24,16 +24,23 @@
                 return;
             }
 
-            var index = vm.currentChat.indexOf('#contact');
-            if (index >= 0) {
-                var results = vm.currentChat.match(/@([A-Za-z0-9_ ]+)@/);
-                if (results && results.length > 0) {
-                    var contactName = results[1];
+            var sObjTypeResults = vm.currentChat.match(/#([A-Za-z0-9_]+)/);
+            var keywordStrResults = vm.currentChat.match(/@([A-Za-z0-9_ ]+)@/);
 
-                    force.query("select id,name,title,phone,mobilephone,email FROM contact where name like '%" + contactName + "%'").then(
+            if (!lodash.isNil(sObjTypeResults) && !lodash.isNil(keywordStrResults)) {
+
+                var sObjectType = sObjTypeResults[1].toUpperCase();
+                var keywardStr = keywordStrResults[1].toLowerCase();
+                
+                // replace first #contact to '' and replace @keyword@ to keyword.
+                vm.currentChat = lodash.replace(vm.currentChat, /#([A-Za-z0-9_]+ )/, '');
+                vm.currentChat = lodash.replace(vm.currentChat, /@([A-Za-z0-9_ ]+)@/, keywardStr);
+
+                if (sObjectType === "CONTACT") {
+                    force.query("select id,name,title,phone,mobilephone,email from " + sObjectType + " where name like '%" + keywardStr + "%'").then(
                         function (data) {
                             if (data.records.length == 0) {
-                                alert("cannot find contact - " + contactName);
+                                alert("cannot find contact - " + keywardStr);
                             }
                             if (data.records.length == 1) {
                                 var contact = data.records[0];
@@ -59,16 +66,19 @@
 
                                 });
                             } else {
-                                alert("Find more than one contact - " + contactName);
+                                alert("Find more than one contact - " + keywardStr);
                             }
                         },
                         function (error) {
-                            alert("cannot find contact - " + contactName);
+                            alert("cannot find contact - " + keywardStr);
                             console.log(error);
                         });
 
 
+                } else if (sObjectType === "ACCOUNT") {
+
                 }
+
             }
 
             vm.chats.$add({
