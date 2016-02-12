@@ -20,7 +20,7 @@
         vm.chatUserId = $stateParams.userId;
 
         vm.sendMessage = function () {
-            if (!vm.currentChat || vm.currentChat.length == 0) {
+            if (!vm.currentChat || vm.currentChat.length === 0) {
                 return;
             }
 
@@ -39,10 +39,10 @@
                 if (sObjectType === "CONTACT") {
                     force.query("select id,name,title,phone,mobilephone,email from " + sObjectType + " where name like '%" + keywardStr + "%'").then(
                         function (data) {
-                            if (data.records.length == 0) {
+                            if (data.records.length === 0) {
                                 alert("cannot find contact - " + keywardStr);
                             }
-                            if (data.records.length == 1) {
+                            if (data.records.length === 1) {
                                 var contact = data.records[0];
 
                                 vm.chats.$add({
