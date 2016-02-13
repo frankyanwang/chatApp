@@ -22,21 +22,21 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
         }
 
         // initialize angular cache. TODO: maybe move to service layer.
-//        CacheFactory.createCache('accessTokenCache', {
-//            storageMode: "localStorage"
-//        });        
+        //        CacheFactory.createCache('accessTokenCache', {
+        //            storageMode: "localStorage"
+        //        });        
         CacheFactory.createCache('avatarCache', {
             storageMode: "localStorage"
         });
-//        CacheFactory.createCache('contactListCache', {
-//            storageMode: "localStorage"
-//        });
-//        CacheFactory.createCache('accountListCache', {
-//            storageMode: "localStorage"
-//        });
-//        CacheFactory.createCache('userListCache', {
-//            storageMode: "localStorage"
-//        });
+        //        CacheFactory.createCache('contactListCache', {
+        //            storageMode: "localStorage"
+        //        });
+        //        CacheFactory.createCache('accountListCache', {
+        //            storageMode: "localStorage"
+        //        });
+        //        CacheFactory.createCache('userListCache', {
+        //            storageMode: "localStorage"
+        //        });
 
 
         // Initialize forceng
@@ -45,7 +45,7 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
         if (forcengOptions.accessToken) {
             // If the accessToken was provided (typically when running the app from within a Visualforce page,
             // go straight to the contact list
-            
+
             $state.go('app.contactlist');
         } else {
             // Otherwise (the app is probably running as a standalone web app or as a hybrid local app with the
@@ -58,6 +58,8 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
                         function (user) {
                             console.log("Current User: " + user);
                             $rootScope.currentUser = user;
+
+                            $rootScope.myAvatar = CacheFactory.get("avatarCache").get($rootScope.currentUser.Id);
 
                             chatFactory.setOnline($rootScope.currentUser.Id);
 
