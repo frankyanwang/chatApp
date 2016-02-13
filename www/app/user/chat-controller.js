@@ -18,11 +18,14 @@
         // model bind to template
         vm.currentChat = '';
         vm.myId = $rootScope.currentUser.Id;
+        vm.myAvatar = vm.avatarCache.get(vm.myId);
+        
         vm.hideTime = true;
 
         vm.chatUserName = $stateParams.userName;
         vm.chatUserId = $stateParams.userId;
-
+        vm.chatUserAvatar = vm.avatarCache.get(vm.chatUserId);
+        
         vm.sendMessage = function () {
             if (!vm.currentChat || vm.currentChat.length === 0) {
                 return;

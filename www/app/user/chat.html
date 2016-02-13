@@ -8,9 +8,9 @@
         <div ng-repeat="chat in chatController.chats" ng-class="{other: chat.userId === chatController.myId}" class="messages">
 
             <div class="message">
-                <img class='chat-image chat-image-default' ng-if="chat.userId === chatController.myId" src='https://lh3.googleusercontent.com/-sGhYlzsAcPY/VDhVBt0-F_I/AAAAAAAAACA/iuUW2PcXqbU/s264-no/10554144_296305277214505_836031705_a.jpg' />
+                <img class='chat-image chat-image-default' ng-if="chat.userId === chatController.myId" ng-src = "{{chatController.myAvatar}}" />
 
-                <img class='chat-image other chat-image-default' ng-if="chat.userId !== chatController.myId" src='https://lh3.googleusercontent.com/-553dkjYDnhs/AAAAAAAAAAI/AAAAAAAAAB4/Ts9dxqVAhYA/s120-c/photo.jpg' />
+                <img class='chat-image other chat-image-default' ng-if="chat.userId !== chatController.myId" ng-src="{{chatController.chatUserAvatar}}" />
 
 
                 <div ng-if="chat.type === undefined || chat.type === 'MESSAGE'">
