@@ -5,12 +5,16 @@
         .module('vlocityApp')
         .controller('ChatController', ChatController);
 
-    ChatController.$inject = ['$stateParams', 'chatFactory', '$rootScope', 'force', '$http', 'lodash'];
+    ChatController.$inject = ['$stateParams', 'chatFactory', '$rootScope', 'force', '$http', 'lodash', 'CacheFactory'];
 
     /* @ngInject */
-    function ChatController($stateParams, chatFactory, $rootScope, force, $http, lodash) {
+    function ChatController($stateParams, chatFactory, $rootScope, force, $http, lodash, CacheFactory) {
         var vm = this;
         vm.property = 'ChatController';
+
+        vm.avatarCache = CacheFactory.get("avatarCache");
+
+
         // model bind to template
         vm.currentChat = '';
         vm.myId = $rootScope.currentUser.Id;
@@ -31,7 +35,7 @@
 
                 var sObjectType = sObjTypeResults[1].toUpperCase();
                 var keywardStr = keywordStrResults[1].toLowerCase();
-                
+
                 // replace first #contact to '' and replace @keyword@ to keyword.
                 vm.currentChat = lodash.replace(vm.currentChat, /#([A-Za-z0-9_]+ )/, '');
                 vm.currentChat = lodash.replace(vm.currentChat, /@([A-Za-z0-9_ ]+)@/, keywardStr);
@@ -58,13 +62,18 @@
                                     var chatKey = ref.key();
                                     var addedChat = vm.chats.$getRecord(chatKey);
 
-                                    $http.get("http://uifaces.com/api/v1/random").then(function (response) {
-                                        console.log(response);
-                                        // epic, bigger, normal, mini
-                                        addedChat.contact.imgUrl = response.data.image_urls.epic;
+                                    if (vm.avatarCache.get(contact.Id)) {
+                                        addedChat.contact.imgUrl = vm.avatarCache.get(contact.Id);
                                         vm.chats.$save(addedChat);
-                                    });
-
+                                    } else {
+                                        $http.get("http://uifaces.com/api/v1/random").then(function (response) {
+                                            console.log(response);
+                                            // epic, bigger, normal, mini
+                                            addedChat.contact.imgUrl = response.data.image_urls.epic;
+                                            vm.chats.$save(addedChat);
+                                            vm.avatarCache.put(contact.Id, value.imgUrl);
+                                        });
+                                    }
                                 });
                             } else {
                                 alert("Find more than one contact - " + keywardStr);
