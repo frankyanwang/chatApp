@@ -9,5 +9,5 @@ angular.module('config', [])
 .constant('FirebaseUrl', 'https://sweltering-fire-1111.firebaseio.com/')
 
 .constant('configOptions', {
-    displayAvatar: false
+    displayAvatar: true
 });
