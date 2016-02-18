@@ -1,0 +1,17 @@
+<ion-view ng-controller="AccountController as vm">
+    <ion-nav-title>
+        {{vm.account.Name}}
+    </ion-nav-title>
+
+    <ion-content class="has-header">
+        <div class="list card">
+            <div class="item">
+                <h2>{{vm.account.Name}}</h2>
+            </div>
+            <a class="item item-icon-left" href="tel:{{vm.account.Phone}}">
+                <i class="icon ion-ios-telephone"></i>Call
+                <p>{{vm.account.Phone}}</p>
+            </a>
+        </div>
+    </ion-content>
+</ion-view>
