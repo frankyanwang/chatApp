@@ -5,10 +5,10 @@
         .module('vlocityApp')
         .controller('ContactController', ContactController);
 
-    ContactController.$inject = ['force', '$stateParams', '$http', 'CacheFactory'];
+    ContactController.$inject = ['$stateParams', '$http', 'CacheFactory', 'VLCObjectQueryManager'];
 
     /* @ngInject */
-    function ContactController(force, $stateParams, $http, CacheFactory) {
+    function ContactController($stateParams, $http, CacheFactory, VLCObjectQueryManager) {
         var vm = this;
         vm.property = 'ContactController';
 
@@ -20,7 +20,9 @@
 
         function activate() {
 
-            force.retrieve('contact', $stateParams.contactId, 'id,name,title,phone,mobilephone,email').then(
+            VLCObjectQueryManager.find('contact', $stateParams.contactId, {
+                fields: "id,name,title,phone,mobilephone,email"
+            }).then(
                 function (contact) {
                     vm.contact = contact;
 

@@ -5,10 +5,10 @@
         .module('vlocityApp')
         .controller('ContactListController', ContactListController);
 
-    ContactListController.$inject = ['configOptions', 'force', '$http', 'CacheFactory'];
+    ContactListController.$inject = ['configOptions', '$http', 'CacheFactory','VLCObjectQueryManager'];
 
     /* @ngInject */
-    function ContactListController(configOptions, force, $http, CacheFactory) {
+    function ContactListController(configOptions, $http, CacheFactory,VLCObjectQueryManager) {
         var vm = this;
         vm.property = 'ContactListController';
 
@@ -20,9 +20,10 @@
         ////////////////
 
         function activate() {
-            force.query('select id, name, title from contact limit 50').then(
-                function (data) {
-                    vm.contacts = data.records;
+            
+            VLCObjectQueryManager.findAll('contact', {fields: ["id","name","title"], limit: 50}).then(
+                function (contactArray) {
+                    vm.contacts = contactArray;
 
                     vm.displayAvatar = configOptions.displayAvatar;
                     if (configOptions.displayAvatar) {
