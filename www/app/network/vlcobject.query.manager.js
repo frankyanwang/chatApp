@@ -4,10 +4,10 @@
         .module('vlocityApp')
         .factory('VLCObjectQueryManager', VLCObjectQueryManager);
 
-    VLCObjectQueryManager.$inject = ['force', 'lodash', '$q', 'SObject', 'Contact', 'Account'];
+    VLCObjectQueryManager.$inject = ['force', 'lodash', '$q', 'SObject', 'Contact', 'Account','User'];
 
     /* @ngInject */
-    function VLCObjectQueryManager(force, lodash, $q, SObject, Contact, Account) {
+    function VLCObjectQueryManager(force, lodash, $q, SObject, Contact, Account, User) {
 
         var exports = {
             findAll: findAll,
@@ -137,7 +137,7 @@
                 sObject = new Account(attrs);
 
             } else if (type === "USER") {
-                //                sObject = new User(attrs);
+                sObject = new User(attrs);
             } else {
                 sObject = new SObject(attrs);
             }

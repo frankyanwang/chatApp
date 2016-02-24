@@ -9,11 +9,11 @@
                 //declare properties.
                 
                 var self = this;
-                var initialSettings = atts || {};
+                var initialProperties = atts || {};
 
-                for (var setting in initialSettings) {
-                    if (initialSettings.hasOwnProperty(setting)) {
-                        self[setting] = initialSettings[setting];
+                for (var prop in initialProperties) {
+                    if (initialProperties.hasOwnProperty(prop)) {
+                        self[prop] = initialProperties[prop];
                     }
                 }
             };

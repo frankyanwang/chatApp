@@ -5,10 +5,10 @@
         .module('vlocityApp')
         .controller('UserListController', UserListController);
 
-    UserListController.$inject = ['configOptions', 'force', 'chatFactory', '$http', 'CacheFactory'];
+    UserListController.$inject = ['configOptions', 'VLCObjectQueryManager', 'chatFactory', '$http', 'CacheFactory'];
 
     /* @ngInject */
-    function UserListController(configOptions, force, chatFactory, $http, CacheFactory){
+    function UserListController(configOptions, VLCObjectQueryManager, chatFactory, $http, CacheFactory){
         var vm = this;
         vm.property = 'UserListController';
         
@@ -24,9 +24,10 @@
 
         function activate() {
 //            force.query("SELECT Id, Name, Email, Title, UserType, UserRole.Name FROM User where Name = 'Frank Wang' or Name = 'Sissi Chen'").then(
-            force.query("SELECT Id, Name, Email, Title, UserType, UserRole.Name FROM User").then(            
-                function (data) {
-                    vm.users = data.records;
+            
+            VLCObjectQueryManager.findAll('user', {fields: "Id, Name, Email, Title, UserType, UserRole.Name"}).then(            
+                function (userArray) {
+                    vm.users = userArray;
                     
                     vm.displayAvatar = configOptions.displayAvatar;
                     if (configOptions.displayAvatar) {
