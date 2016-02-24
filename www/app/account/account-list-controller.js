@@ -5,13 +5,13 @@
         .module('vlocityApp')
         .controller('AccountListController', AccountListController);
 
-    AccountListController.$inject = ['force'];
+    AccountListController.$inject = ['VLCObjectQueryManager'];
 
     /* @ngInject */
-    function AccountListController(force) {
+    function AccountListController(VLCObjectQueryManager) {
         var vm = this;
         vm.property = 'AccountListController';
-        
+
         console.log("==AccountListController==");
 
         activate();
@@ -19,10 +19,19 @@
         ////////////////
 
         function activate() {
-            force.query('select id, name from account limit 50').then(
-                function (data) {
-                    vm.accounts = data.records;
+            
+            VLCObjectQueryManager.findAll('account', {
+                fields: "id, name",
+                limit: 50
+            }).then(
+                function (accountArray) {
+                    vm.accounts = accountArray;
+                },
+                function (error) {
+                    alert("Error Retrieving Accounts");
+                    console.log(error);
                 });
+
         }
     }
 })();
