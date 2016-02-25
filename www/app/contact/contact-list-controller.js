@@ -5,10 +5,10 @@
         .module('vlocityApp')
         .controller('ContactListController', ContactListController);
 
-    ContactListController.$inject = ['configOptions', '$http', 'CacheFactory','VLCObjectQueryManager'];
+    ContactListController.$inject = ['configOptions', '$http', 'CacheFactory','VLCObjectQueryManager','Contact'];
 
     /* @ngInject */
-    function ContactListController(configOptions, $http, CacheFactory,VLCObjectQueryManager) {
+    function ContactListController(configOptions, $http, CacheFactory,VLCObjectQueryManager, Contact) {
         var vm = this;
         vm.property = 'ContactListController';
 
@@ -21,7 +21,7 @@
 
         function activate() {
             
-            VLCObjectQueryManager.findAll('contact', {fields: ["id","name","title"], limit: 50}).then(
+            VLCObjectQueryManager.findAll('contact', {fields: Contact.namesOfFieldsToRequest, limit: 50}).then(
                 function (contactArray) {
                     vm.contacts = contactArray;
 

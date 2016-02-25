@@ -21,7 +21,7 @@
         function activate() {
 
             VLCObjectQueryManager.find('contact', $stateParams.contactId, {
-                fields: "id,name,title,phone,mobilephone,email"
+//                fields: "id,name,title,phone,mobilephone,email"
             }).then(
                 function (contact) {
                     vm.contact = contact;
