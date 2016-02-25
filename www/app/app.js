@@ -52,18 +52,18 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
             // Mobile SDK, login first.)
             force.login().then(
                 function () {
-                    console.log('AppJS Current User ID: ' + force.getUserId());
-
-                    force.retrieve('user', force.getUserId(), 'id, name, email').then(
-                        function (user) {
-                            console.log("Current User: " + user);
-                            $rootScope.currentUser = user;
-
-                            $rootScope.myAvatar = CacheFactory.get("avatarCache").get($rootScope.currentUser.Id);
-
-                            chatFactory.setOnline($rootScope.currentUser.Id);
-
-                        });
+//                    console.log('AppJS Current User ID: ' + force.getUserId());
+//
+//                    force.retrieve('user', force.getUserId(), 'id, name, email').then(
+//                        function (user) {
+//                            console.log("Current User: " + user);
+//                            $rootScope.currentUser = user;
+//
+//                            $rootScope.myAvatar = CacheFactory.get("avatarCache").get($rootScope.currentUser.Id);
+//
+//                            chatFactory.setOnline($rootScope.currentUser.Id);
+//
+//                        });
                     $state.go('app.contactlist');
                 },
                 function (error) {
