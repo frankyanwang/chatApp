@@ -121,7 +121,7 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
         url: "/create-contact",
         views: {
             'menuContent': {
-                templateUrl: baseURL + "app/contact/edit-contact.html",
+                templateUrl: baseURL + "app/contact/create-contact.html",
             }
         }
     })
