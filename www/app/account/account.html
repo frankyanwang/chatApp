@@ -5,6 +5,7 @@
 
     <ion-content class="has-header">
         <div class="list card">
+            <!--
             <div class="item">
                 <h2>{{vm.account.Name}}</h2>
             </div>
@@ -12,6 +13,12 @@
                 <i class="icon ion-ios-telephone"></i>Call
                 <p>{{vm.account.Phone}}</p>
             </a>
+-->
+            <ion-item ng-repeat="(key, value) in vm.account">
+                {{key}}
+                <p>{{value}}</p>
+            </ion-item>
+
         </div>
     </ion-content>
 </ion-view>

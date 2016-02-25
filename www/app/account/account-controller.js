@@ -17,7 +17,7 @@
         ////////////////
 
         function activate() {
-            VLCObjectQueryManager.find('account', $stateParams.accountId, {fields:'id,name,phone,billingaddress'}).then(
+            VLCObjectQueryManager.find('account', $stateParams.accountId, {}).then(
                 function (account) {
                     vm.account = account;
                 }, function(e){
