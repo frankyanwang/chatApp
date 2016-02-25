@@ -125,6 +125,8 @@
 
         };
 
+        //////////////// Private Functions.
+
         function createModel(modelType, attrs) {
             var sObject;
 
@@ -138,8 +140,10 @@
 
             } else if (type === "USER") {
                 sObject = new User(attrs);
+                
             } else {
                 sObject = new SObject(attrs);
+                
             }
 
             // define convenient instance methods here.

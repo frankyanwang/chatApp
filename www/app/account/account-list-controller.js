@@ -5,10 +5,10 @@
         .module('vlocityApp')
         .controller('AccountListController', AccountListController);
 
-    AccountListController.$inject = ['VLCObjectQueryManager'];
+    AccountListController.$inject = ['VLCObjectQueryManager', 'Account'];
 
     /* @ngInject */
-    function AccountListController(VLCObjectQueryManager) {
+    function AccountListController(VLCObjectQueryManager, Account) {
         var vm = this;
         vm.property = 'AccountListController';
 
@@ -21,7 +21,7 @@
         function activate() {
             
             VLCObjectQueryManager.findAll('account', {
-                fields: "id, name",
+                fields: Account.namesOfFieldsToRequest,
                 limit: 50
             }).then(
                 function (accountArray) {
