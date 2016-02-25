@@ -1,34 +1,36 @@
-(function() {
+(function () {
     'use strict';
 
     angular
         .module('vlocityApp')
         .controller('UserListController', UserListController);
 
-    UserListController.$inject = ['configOptions', 'VLCObjectQueryManager', 'chatFactory', '$http', 'CacheFactory'];
+    UserListController.$inject = ['configOptions', 'VLCObjectQueryManager', 'chatFactory', '$http', 'CacheFactory', 'User'];
 
     /* @ngInject */
-    function UserListController(configOptions, VLCObjectQueryManager, chatFactory, $http, CacheFactory){
+    function UserListController(configOptions, VLCObjectQueryManager, chatFactory, $http, CacheFactory, User) {
         var vm = this;
         vm.property = 'UserListController';
-        
-        vm.avatarCache = CacheFactory.get("avatarCache");        
+
+        vm.avatarCache = CacheFactory.get("avatarCache");
 
         console.log("== UserListController ==");
-        
+
         vm.isUserOnline = chatFactory.isUserOnline;
-        
+
         activate();
 
         ////////////////
 
         function activate() {
-//            force.query("SELECT Id, Name, Email, Title, UserType, UserRole.Name FROM User where Name = 'Frank Wang' or Name = 'Sissi Chen'").then(
-            
-            VLCObjectQueryManager.findAll('user', {fields: "Id, Name, Email, Title, UserType, UserRole.Name"}).then(            
+
+            VLCObjectQueryManager.findAll('user', {
+                fields: User.namesOfFieldsToRequest
+//                where: "Name = 'Frank Wang' or Name = 'Sissi Chen'"
+            }).then(
                 function (userArray) {
                     vm.users = userArray;
-                    
+
                     vm.displayAvatar = configOptions.displayAvatar;
                     if (configOptions.displayAvatar) {
                         angular.forEach(vm.users, function (value, key) {
@@ -43,14 +45,14 @@
                                     vm.avatarCache.put(userId, value.imgUrl);
                                 });
                             }
-                        });                           
+                        });
                     }
-                    
+
                 },
                 function (error) {
                     alert("Error Retrieving Contacts");
                     console.log(error);
-                });            
+                });
         }
     }
 })();

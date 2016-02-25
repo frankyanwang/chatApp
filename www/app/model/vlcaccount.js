@@ -14,9 +14,14 @@
             // subclass extends superclass using lodash .create.
             // also define its own public methods here.            
             Account.prototype = lodash.create(SObject.prototype, {
-                constructor: Account,
-                namesOfFieldsToRequest: ["id", "name", "title", "phone", "mobilephone", "email"]
+                constructor: Account
             });
+            
+            var namesOfFieldsToRequest = ["id", "name"];
+            
+            // public Static Properties.
+            // Prevent modifications to private variable incase we are reusing it.
+            Account.namesOfFieldsToRequest = angular.copy(namesOfFieldsToRequest);            
 
             return Account;
 
