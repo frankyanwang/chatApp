@@ -69,7 +69,7 @@
                                         addedChat.contact.imgUrl = vm.avatarCache.get(contact.Id);
                                         vm.chats.$save(addedChat);
                                     } else {
-                                        $http.get("http://uifaces.com/api/v1/random").then(function (response) {
+                                        $http.get("http://uifaces.com/api/v1/random?timestamp="+contact.Id).then(function (response) {
                                             console.log(response);
                                             // epic, bigger, normal, mini
                                             addedChat.contact.imgUrl = response.data.image_urls.epic;

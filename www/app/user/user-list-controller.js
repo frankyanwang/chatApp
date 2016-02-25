@@ -38,7 +38,7 @@
                             if (vm.avatarCache.get(userId)) {
                                 value.imgUrl = vm.avatarCache.get(userId);
                             } else {
-                                $http.get("http://uifaces.com/api/v1/random").then(function (response) {
+                                $http.get("http://uifaces.com/api/v1/random?timestamp="+userId).then(function (response) {
                                     console.log(response);
                                     // epic, bigger, normal, mini
                                     value.imgUrl = response.data.image_urls.epic;
