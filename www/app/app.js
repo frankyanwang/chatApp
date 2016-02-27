@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodash', 'angular-cache'])
 
-.run(function ($rootScope, $ionicPlatform, $state, force, forcengOptions, chatFactory, $http, CommonService) {
+.run(function ($rootScope, $ionicPlatform, $state, force, forcengOptions, chatFactory, CommonService) {
 
     $ionicPlatform.ready(function () {
 
