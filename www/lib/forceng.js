@@ -261,7 +261,7 @@ angular.module('forceng', [])
           function (creds) {
             // Initialize ForceJS
             init({accessToken: creds.accessToken, instanceURL: creds.instanceUrl, refreshToken: creds.refreshToken});
-            if (deferredLogin) deferredLogin.resolve();
+            if (deferredLogin) deferredLogin.resolve(creds);
           },
           function (error) {
             console.log(error);

@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodash', 'angular-cache'])
 
-.run(function ($rootScope, $ionicPlatform, $state, force, forcengOptions, chatFactory, CacheFactory) {
+.run(function ($rootScope, $ionicPlatform, $state, force, forcengOptions, chatFactory, CacheFactory, $http) {
 
     $ionicPlatform.ready(function () {
 
@@ -51,19 +51,29 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
             // Otherwise (the app is probably running as a standalone web app or as a hybrid local app with the
             // Mobile SDK, login first.)
             force.login().then(
-                function () {
-//                    console.log('AppJS Current User ID: ' + force.getUserId());
-//
-//                    force.retrieve('user', force.getUserId(), 'id, name, email').then(
-//                        function (user) {
-//                            console.log("Current User: " + user);
-//                            $rootScope.currentUser = user;
-//
-//                            $rootScope.myAvatar = CacheFactory.get("avatarCache").get($rootScope.currentUser.Id);
-//
-//                            chatFactory.setOnline($rootScope.currentUser.Id);
-//
-//                        });
+                function (credential) {
+                    console.log(credential);
+
+                    var userId = credential ? credential.userId : force.getUserId();
+
+                    force.retrieve('user', userId, 'id, name, email').then(
+                        function (user) {
+                            console.log("Current User: " + user);
+                            $rootScope.currentUser = user;
+
+                            $rootScope.myAvatar = CacheFactory.get("avatarCache").get($rootScope.currentUser.Id);
+                            if (!$rootScope.myAvatar) {
+                                $http.get("http://uifaces.com/api/v1/random?timestamp=" + $rootScope.currentUser.Id).then(function (response) {
+                                    console.log(response);
+                                    // epic, bigger, normal, mini
+                                    $rootScope.myAvatar = response.data.image_urls.epic;
+                                    CacheFactory.get("avatarCache").put($rootScope.currentUser.Id, response.data.image_urls.epic);
+                                });
+                            }
+
+                            chatFactory.setOnline($rootScope.currentUser.Id);
+
+                        });
                     $state.go('app.contactlist');
                 },
                 function (error) {

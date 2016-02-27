@@ -27,7 +27,7 @@
                     Users
                 </ion-item>
                 <ion-item class="item-avatar" menu-close ng-click="logout()">
-                    <img ng-src="{{myAvatar}}"> 
+                    <img ng-show="myAvatar" ng-src="{{myAvatar}}"> 
                     {{currentUser.Name}}
                     <p>Logout</p>
                 </ion-item>
