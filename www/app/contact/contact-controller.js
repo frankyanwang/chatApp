@@ -5,14 +5,12 @@
         .module('vlocityApp')
         .controller('ContactController', ContactController);
 
-    ContactController.$inject = ['$stateParams', '$http', 'CacheFactory', 'VLCObjectQueryManager'];
+    ContactController.$inject = ['$stateParams', '$http', 'VLCObjectQueryManager', 'CommonService'];
 
     /* @ngInject */
-    function ContactController($stateParams, $http, CacheFactory, VLCObjectQueryManager) {
+    function ContactController($stateParams, $http, VLCObjectQueryManager, CommonService) {
         var vm = this;
         vm.property = 'ContactController';
-
-        vm.avatarCache = CacheFactory.get("avatarCache");
 
         activate();
 
@@ -26,16 +24,11 @@
                 function (contact) {
                     vm.contact = contact;
 
-                    if (vm.avatarCache.get(vm.contact.Id)) {
-                        vm.contact.imgUrl = vm.avatarCache.get(vm.contact.Id);
-                    } else {
-                        $http.get("http://uifaces.com/api/v1/random?timestamp="+vm.contact.Id).then(function (response) {
-                            console.log(response);
-                            // epic, bigger, normal, mini
-                            vm.contact.imgUrl = response.data.image_urls.epic;
-                            vm.avatarCache.put(vm.contact.Id, value.imgUrl);
-                        });
-                    }
+                    CommonService.getAvatarUrlById(vm.contact.Id).then(function (imgUrl) {
+                        vm.contact.imgUrl = imgUrl;
+                    }, function (error) {
+                        vm.contact.imgUrl = undefined;
+                    });
                 });
         }
     }

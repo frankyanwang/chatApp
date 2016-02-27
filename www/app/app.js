@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodash', 'angular-cache'])
 
-.run(function ($rootScope, $ionicPlatform, $state, force, forcengOptions, chatFactory, CacheFactory, $http) {
+.run(function ($rootScope, $ionicPlatform, $state, force, forcengOptions, chatFactory, $http, CommonService) {
 
     $ionicPlatform.ready(function () {
 
@@ -20,23 +20,6 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
             // org.apache.cordova.statusbar required
             StatusBar.styleDefault();
         }
-
-        // initialize angular cache. TODO: maybe move to service layer.
-        //        CacheFactory.createCache('accessTokenCache', {
-        //            storageMode: "localStorage"
-        //        });        
-        CacheFactory.createCache('avatarCache', {
-            storageMode: "localStorage"
-        });
-        //        CacheFactory.createCache('contactListCache', {
-        //            storageMode: "localStorage"
-        //        });
-        //        CacheFactory.createCache('accountListCache', {
-        //            storageMode: "localStorage"
-        //        });
-        //        CacheFactory.createCache('userListCache', {
-        //            storageMode: "localStorage"
-        //        });
 
 
         // Initialize forceng
@@ -59,17 +42,11 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
                     force.retrieve('user', userId, 'id, name, email').then(
                         function (user) {
                             console.log("Current User: " + user);
-                            $rootScope.currentUser = user;
 
-                            $rootScope.myAvatar = CacheFactory.get("avatarCache").get($rootScope.currentUser.Id);
-                            if (!$rootScope.myAvatar) {
-                                $http.get("http://uifaces.com/api/v1/random?timestamp=" + $rootScope.currentUser.Id).then(function (response) {
-                                    console.log(response);
-                                    // epic, bigger, normal, mini
-                                    $rootScope.myAvatar = response.data.image_urls.epic;
-                                    CacheFactory.get("avatarCache").put($rootScope.currentUser.Id, response.data.image_urls.epic);
-                                });
-                            }
+                            $rootScope.currentUser = user;
+                            CommonService.getAvatarUrlById($rootScope.currentUser.Id).then(function (imgUrl) {
+                                $rootScope.myAvatar = imgUrl;
+                            });
 
                             chatFactory.setOnline($rootScope.currentUser.Id);
 

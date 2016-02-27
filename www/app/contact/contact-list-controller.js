@@ -5,14 +5,12 @@
         .module('vlocityApp')
         .controller('ContactListController', ContactListController);
 
-    ContactListController.$inject = ['configOptions', '$http', 'CacheFactory', 'VLCObjectQueryManager', 'Contact'];
+    ContactListController.$inject = ['configOptions', '$http', 'CommonService', 'VLCObjectQueryManager', 'Contact'];
 
     /* @ngInject */
-    function ContactListController(configOptions, $http, CacheFactory, VLCObjectQueryManager, Contact) {
+    function ContactListController(configOptions, $http, CommonService, VLCObjectQueryManager, Contact) {
         var vm = this;
         vm.property = 'ContactListController';
-
-        vm.avatarCache = CacheFactory.get("avatarCache");
 
         activate();
 
@@ -32,20 +30,13 @@
                     if (configOptions.displayAvatar) {
 
                         angular.forEach(vm.contacts, function (value, key) {
-                            var contactId = value.Id;
-                            if (vm.avatarCache.get(contactId)) {
-                                value.imgUrl = vm.avatarCache.get(contactId);
-                            } else {
-                                setTimeout(function () {
-                                    $http.get("http://uifaces.com/api/v1/random?timestamp="+contactId).then(function (response) {
-                                        console.log(response);
-                                        // epic, bigger, normal, mini
-                                        value.imgUrl = response.data.image_urls.epic;
-                                        vm.avatarCache.put(contactId, value.imgUrl);
-                                    });
 
-                                }, 10);
-                            }
+                            CommonService.getAvatarUrlById(value.Id).then(function (imgUrl) {
+                                value.imgUrl = imgUrl;
+                            }, function (error) {
+                                value.imgUrl = undefined;
+                            });
+                            
                         });
                     }
                 },

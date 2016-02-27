@@ -5,27 +5,31 @@
         .module('vlocityApp')
         .controller('ChatController', ChatController);
 
-    ChatController.$inject = ['$stateParams', 'chatFactory', '$rootScope', 'force', '$http', 'lodash', 'CacheFactory'];
+    ChatController.$inject = ['$stateParams', 'chatFactory', '$rootScope', 'force', '$http', 'lodash', 'CommonService'];
 
     /* @ngInject */
-    function ChatController($stateParams, chatFactory, $rootScope, force, $http, lodash, CacheFactory) {
+    function ChatController($stateParams, chatFactory, $rootScope, force, $http, lodash, CommonService) {
         var vm = this;
         vm.property = 'ChatController';
-
-        vm.avatarCache = CacheFactory.get("avatarCache");
-
 
         // model bind to template
         vm.currentChat = '';
         vm.myId = $rootScope.currentUser.Id;
-        vm.myAvatar = vm.avatarCache.get(vm.myId);
-        
+
+        CommonService.getAvatarUrlById(vm.myId).then(function (imgUrl) {
+            vm.myAvatar = imgUrl;
+        });
+
+
         vm.hideTime = true;
 
         vm.chatUserName = $stateParams.userName;
         vm.chatUserId = $stateParams.userId;
-        vm.chatUserAvatar = vm.avatarCache.get(vm.chatUserId);
-        
+
+        CommonService.getAvatarUrlById(vm.chatUserId).then(function (imgUrl) {
+            vm.chatUserAvatar = imgUrl;
+        });
+
         vm.sendMessage = function () {
             if (!vm.currentChat || vm.currentChat.length === 0) {
                 return;
@@ -65,18 +69,14 @@
                                     var chatKey = ref.key();
                                     var addedChat = vm.chats.$getRecord(chatKey);
 
-                                    if (vm.avatarCache.get(contact.Id)) {
-                                        addedChat.contact.imgUrl = vm.avatarCache.get(contact.Id);
+                                    CommonService.getAvatarUrlById(contact.Id).then(function (imgUrl) {
+                                        addedChat.contact.imgUrl = imgUrl;
                                         vm.chats.$save(addedChat);
-                                    } else {
-                                        $http.get("http://uifaces.com/api/v1/random?timestamp="+contact.Id).then(function (response) {
-                                            console.log(response);
-                                            // epic, bigger, normal, mini
-                                            addedChat.contact.imgUrl = response.data.image_urls.epic;
-                                            vm.chats.$save(addedChat);
-                                            vm.avatarCache.put(contact.Id, value.imgUrl);
-                                        });
-                                    }
+                                    }, function (error) {
+                                        vm.contact.imgUrl = undefined;
+                                    });
+
+
                                 });
                             } else {
                                 alert("Find more than one contact - " + keywardStr);
