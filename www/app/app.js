@@ -130,6 +130,15 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
             }
         }
     })
+    
+    .state('app.orderlist', {
+        url: "/orderlist",
+        views: {
+            'menuContent': {
+                templateUrl: baseURL + "app/order/order-list.html",
+            }
+        }
+    })  
 
     .state('app.userlist', {
         url: "/userlist",

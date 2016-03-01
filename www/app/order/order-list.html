@@ -1,0 +1,16 @@
+<ion-view view-title="<i class='icon ion-android-contact'></i> Orders" ng-controller="OrderListController as vm">
+
+     <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons> 
+
+    <ion-content class="has-header">
+        <ion-list>
+            <ion-item class="item" ng-class="{'item-avatar': vm.displayAvatar}" ng-repeat="order in vm.orders" href="#/app/orders/{{order.Id}}">
+                {{order.OrderNumber}} from {{order.Account.Name}}
+                <p>{{order.Status}} on {{order.EffectiveDate}}</p>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+
+</ion-view>
