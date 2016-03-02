@@ -7,7 +7,7 @@
             //Constructor, with class name
             function SObject(atts) {
                 //declare properties.
-                
+
                 var self = this;
                 var initialProperties = atts || {};
 
@@ -26,7 +26,7 @@
 
             ////////////////
             function printClassName() {
-                console.log("Class Name: " + this.constructor.name);
+                console.log("Class Name:", this.constructor.name);
                 return this.constructor.name;
             };
 

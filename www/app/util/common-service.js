@@ -58,7 +58,7 @@
                     avatarCache.put(uid, imgURL);
                 }, function (error) {
                     deferred.reject(error);
-                    console.log("Failed to get avatar image: " + uid);
+                    console.log("Failed to get avatar image:", uid);
                     console.log(error);
                 });
             }
@@ -85,7 +85,7 @@
                 },
                 function (error) {
                     deferred.reject(error);
-                    console.log("Failed to get current user: " + userId);
+                    console.log("Failed to get current user:", userId);
                     console.log(error);
                 });
 

@@ -4,10 +4,10 @@
         .module('vlocityApp')
         .factory('VLCObjectQueryManager', VLCObjectQueryManager);
 
-    VLCObjectQueryManager.$inject = ['force', 'lodash', '$q', 'SObject', 'Contact', 'Account','User','Order'];
+    VLCObjectQueryManager.$inject = ['force', 'lodash', '$q', 'SObject', 'Contact', 'Account', 'User', 'Order'];
 
     /* @ngInject */
-    function VLCObjectQueryManager(force, lodash, $q, SObject, Contact, Account, User,Order) {
+    function VLCObjectQueryManager(force, lodash, $q, SObject, Contact, Account, User, Order) {
 
         var exports = {
             findAll: findAll,
@@ -75,7 +75,7 @@
                 function (error) {
                     deferred.reject(error);
 
-                    console.log("Find All error: " + query);
+                    console.log("Find All error:", query);
                     console.log(error);
                 });
 
@@ -116,7 +116,7 @@
                 function (error) {
                     deferred.reject(error);
 
-                    console.log("Find error: " + modelType);
+                    console.log("Find error:", modelType);
                     console.log(error);
                 });
 
@@ -140,14 +140,13 @@
 
             } else if (type === "USER") {
                 sObject = new User(attrs);
-                
+
             } else if (type === "ORDER") {
                 sObject = new Order(attrs);
-                
-            } 
-            else {
+
+            } else {
                 sObject = new SObject(attrs);
-                
+
             }
 
             // define convenient instance methods here.

@@ -35,7 +35,7 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
             // Mobile SDK, login first.)
             force.login().then(
                 function (creds) {
-                    console.log("creds from forceng: ", creds);
+                    console.log("creds from forceng:", creds);
 
                     var credential;
                     //creds exists when login from real device.
@@ -48,7 +48,7 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
                         };
                     }
                     CommonService.setLoginCreds(credential);
-                    
+
                     CommonService.getCurrentUser(true).then(
                         function (user) {
                             $rootScope.currentUser = user;
