@@ -34,15 +34,23 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
             // Otherwise (the app is probably running as a standalone web app or as a hybrid local app with the
             // Mobile SDK, login first.)
             force.login().then(
-                function (credential) {
-                    console.log(credential);
+                function (creds) {
+                    console.log("creds from forceng: ", creds);
 
-                    var userId = credential ? credential.userId : force.getUserId();
-
-                    force.retrieve('user', userId, 'id, name, email').then(
+                    var credential;
+                    //creds exists when login from real device.
+                    if (creds) {
+                        userId = creds.userId;
+                        credential = creds;
+                    } else {
+                        credential = {
+                            userId: force.getUserId()
+                        };
+                    }
+                    CommonService.setLoginCreds(credential);
+                    
+                    CommonService.getCurrentUser(true).then(
                         function (user) {
-                            console.log("Current User: " + user);
-
                             $rootScope.currentUser = user;
                             CommonService.getAvatarUrlById($rootScope.currentUser.Id).then(function (imgUrl) {
                                 $rootScope.myAvatar = imgUrl;
@@ -130,7 +138,7 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
             }
         }
     })
-    
+
     .state('app.orderlist', {
         url: "/orderlist",
         views: {
@@ -138,7 +146,7 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
                 templateUrl: baseURL + "app/order/order-list.html",
             }
         }
-    })  
+    })
 
     .state('app.userlist', {
         url: "/userlist",

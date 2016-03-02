@@ -4,13 +4,14 @@
         .module('vlocityApp')
         .factory('CommonService', CommonService);
 
-    CommonService.$inject = ['$http', '$q', 'CacheFactory','force'];
+    CommonService.$inject = ['$http', '$q', 'CacheFactory', 'force', 'VLCObjectQueryManager'];
 
     /* @ngInject */
-    function CommonService($http, $q, CacheFactory, force) {
+    function CommonService($http, $q, CacheFactory, force, VLCObjectQueryManager) {
         var exports = {
+            setLoginCreds: setLoginCreds,
             getAvatarUrlById: getAvatarUrlById,
-            currentUser: currentUser,
+            getCurrentUser: getCurrentUser,
             getOrgNamespace: getOrgNamespace
         };
 
@@ -33,11 +34,16 @@
 
         var currentUser;
         var namespacePrefix;
+        var creds;
         var avatarCache = CacheFactory.get("avatarCache");
 
         return exports;
 
         ////////////////
+
+        function setLoginCreds(credential) {
+            creds = credential;
+        }
 
         function getAvatarUrlById(uid) {
             var deferred = $q.defer();
@@ -59,13 +65,40 @@
             return deferred.promise;
         }
 
-        function getOrgNamespace() {
+        function getCurrentUser(refresh) {
+
             var deferred = $q.defer();
-//            //TODO: don't cache it until find a way to invalidate cache.
-//            if(namespacePrefix){
-//                deferred.resolve(namespacePrefix);
-//            }
-            
+
+            if (!refresh && currentUser) {
+                deferred.resolve(currentUser);
+            }
+
+            var userId = creds.userId;
+
+            VLCObjectQueryManager.find('user', userId, {
+                fields: 'id, name, email'
+            }).then(
+                function (user) {
+                    currentUser = user;
+                    console.log("Current User:", user);
+                    deferred.resolve(user);
+                },
+                function (error) {
+                    deferred.reject(error);
+                    console.log("Failed to get current user: " + userId);
+                    console.log(error);
+                });
+
+            return deferred.promise;
+        }
+
+        function getOrgNamespace(refresh) {
+            var deferred = $q.defer();
+            //            //TODO: don't cache it until find a way to invalidate cache.
+            if (!refresh && namespacePrefix) {
+                deferred.resolve(namespacePrefix);
+            }
+
             force.query("SELECT NamespacePrefix FROM ApexClass WHERE Name = 'VlocityOrganization'").then(function (result) {
                 namespacePrefix = result.records[0].NamespacePrefix;
                 deferred.resolve(namespacePrefix);
@@ -74,7 +107,7 @@
                 console.log("Failed to get NamespacePrefix");
                 console.log(error);
             });
-            
+
             return deferred.promise;
         }
     }
