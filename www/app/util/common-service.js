@@ -4,15 +4,16 @@
         .module('vlocityApp')
         .factory('CommonService', CommonService);
 
-    CommonService.$inject = ['$http', '$q', 'CacheFactory', 'force', 'VLCObjectQueryManager'];
+    CommonService.$inject = ['$http', '$q', 'CacheFactory', 'force', 'VLCObjectQueryManager','lodash'];
 
     /* @ngInject */
-    function CommonService($http, $q, CacheFactory, force, VLCObjectQueryManager) {
+    function CommonService($http, $q, CacheFactory, force, VLCObjectQueryManager,lodash) {
         var exports = {
             setLoginCreds: setLoginCreds,
             getAvatarUrlById: getAvatarUrlById,
             getCurrentUser: getCurrentUser,
-            getOrgNamespace: getOrgNamespace
+            getOrgNamespace: getOrgNamespace,
+            getAllSObjects: getAllSObjects
         };
 
         // initialize angular cache. TODO: maybe move to service layer.
@@ -32,9 +33,11 @@
         //            storageMode: "localStorage"
         //        });        
 
-        var currentUser;
-        var namespacePrefix;
-        var creds;
+        var currentUser,
+            namespacePrefix,
+            allSObjects,
+            creds;
+
         var avatarCache = CacheFactory.get("avatarCache");
 
         return exports;
@@ -108,6 +111,30 @@
                 console.log(error);
             });
 
+            return deferred.promise;
+        }
+
+        function getAllSObjects(refresh) {
+            var deferred = $q.defer();
+
+            if (!refresh && allSObjects) {
+                deferred.resolve(allSObjects);
+            }
+
+            force.request({
+                path: '/services/data/v36.0/sobjects'
+            }).then(function (result) {
+                allSObjects = {};
+                lodash.each(result.sobjects, function(value){
+                    allSObjects[value.name] = value;     
+                });
+                console.log(allSObjects);
+            }, function (error) {
+                deferred.reject(error);
+                console.log("Failed to getAllSObjects");
+                console.log(error);
+            });
+            
             return deferred.promise;
         }
     }
