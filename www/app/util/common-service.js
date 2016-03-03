@@ -8,11 +8,14 @@
 
     /* @ngInject */
     function CommonService($http, $q, CacheFactory, force, VLCObjectQueryManager, lodash) {
+        var _ = lodash;
+
         var exports = {
             setLoginCreds: setLoginCreds,
             getAvatarUrlById: getAvatarUrlById,
             getCurrentUser: getCurrentUser,
             getOrgNamespace: getOrgNamespace,
+            resolvedObjectType: resolvedObjectType,
             getAllSObjects: getAllSObjects,
             getSObjectDescription: getSObjectDescription
         };
@@ -118,6 +121,47 @@
             return deferred.promise;
         }
 
+        function resolvedObjectType(modelClass) {
+            var deferred = $q.defer();
+
+            var isCustomObject = false;
+            var objectType = modelClass.objectType || modelClass.prototype.printClassName();
+            
+            if (modelClass.isCustomObject || modelClass.prototype.isCustomObject) {
+                isCustomObject = true;
+            }            
+
+            getOrgNamespace().then(function (namespacePrefix) {
+                var resolvedName = objectType;
+                if (isCustomObject) {
+                    //remove __c because we will add later.
+                    if(resolvedName.slice(-3) === '__c'){
+                        resolvedName = resolvedName.slice(0,-3);    
+                    }
+                    
+                    if (_.isEmpty(namespacePrefix)) {
+                        resolvedName = resolvedName + "__c";
+                    } else {
+                        resolvedName = namespacePrefix + "__" + resolvedName + "__c";
+                    }
+                    deferred.resolve(resolvedName);
+                } else {
+                    // if not custom object, should remove __c in the end.
+                    if(resolvedName.slice(-3) === '__c'){
+                        resolvedName = resolvedName.slice(0,-3);    
+                    }
+                    
+                    if(resolvedName.indexOf("__") > -1 && !_.isEmpty(namespacePrefix)) {
+                        resolvedName = namespacePrefix + "__" + resolvedName;
+                    }
+                    deferred.resolve(resolvedName); 
+                }
+
+            });
+
+            return deferred.promise;
+        }
+
         // usage: CommonService.getAllSObjects().then(function(allSObjects) {
         //            console.log(result);
         //        });        
@@ -132,7 +176,7 @@
                 path: '/services/data/v36.0/sobjects'
             }).then(function (result) {
                 allSObjects = {};
-                lodash.each(result.sobjects, function (value) {
+                _.each(result.sobjects, function (value) {
                     allSObjects[value.name] = value;
                 });
                 //console.log(allSObjects);
@@ -155,8 +199,8 @@
             var deferred = $q.defer();
 
             getAllSObjects().then(function () {
-                var sObj = allSObjects[lodash.capitalize(objectType)];
-                if (lodash.isNil(sObj)) {
+                var sObj = allSObjects[_.capitalize(objectType)];
+                if (_.isNil(sObj)) {
                     console.log("objectType is invalid.");
                     deferred.reject(new Error("objectType is invalid."));
                 }

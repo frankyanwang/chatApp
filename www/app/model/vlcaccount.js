@@ -21,7 +21,10 @@
             
             // public Static Properties.
             // Prevent modifications to private variable incase we are reusing it.
-            Account.namesOfFieldsToRequest = angular.copy(namesOfFieldsToRequest);            
+            Account.namesOfFieldsToRequest = angular.copy(namesOfFieldsToRequest);
+            
+            //this is optional unless objectType is different from object name.
+//            Account.objectType = "Account";
 
             return Account;
 

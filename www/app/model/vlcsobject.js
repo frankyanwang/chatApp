@@ -19,6 +19,7 @@
             };
 
             SObject.prototype = {
+                isCustomObject: false,
                 printClassName: printClassName
             }
 
@@ -29,6 +30,7 @@
                 console.log("Class Name:", this.constructor.name);
                 return this.constructor.name;
             };
+            
 
     }]);
 })();
