@@ -14,6 +14,18 @@
 
         activate();
 
+        //sample code to get all objects and object description.
+//        CommonService.getAllSObjects().then(function (result) {
+//            console.log(result);
+//            return CommonService.getSObjectDescription('account');
+//        }).then(function (result) {
+//            console.log(result);
+//        });
+        
+//        CommonService.getSObjectDescription('account').then(function (result) {
+//            console.log(result);
+//        });
+
 
         ////////////////
 
@@ -36,7 +48,7 @@
                             }, function (error) {
                                 value.imgUrl = undefined;
                             });
-                            
+
                         });
                     }
                 },

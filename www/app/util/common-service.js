@@ -4,16 +4,17 @@
         .module('vlocityApp')
         .factory('CommonService', CommonService);
 
-    CommonService.$inject = ['$http', '$q', 'CacheFactory', 'force', 'VLCObjectQueryManager','lodash'];
+    CommonService.$inject = ['$http', '$q', 'CacheFactory', 'force', 'VLCObjectQueryManager', 'lodash'];
 
     /* @ngInject */
-    function CommonService($http, $q, CacheFactory, force, VLCObjectQueryManager,lodash) {
+    function CommonService($http, $q, CacheFactory, force, VLCObjectQueryManager, lodash) {
         var exports = {
             setLoginCreds: setLoginCreds,
             getAvatarUrlById: getAvatarUrlById,
             getCurrentUser: getCurrentUser,
             getOrgNamespace: getOrgNamespace,
-            getAllSObjects: getAllSObjects
+            getAllSObjects: getAllSObjects,
+            getSObjectDescription: getSObjectDescription
         };
 
         // initialize angular cache. TODO: maybe move to service layer.
@@ -36,6 +37,7 @@
         var currentUser,
             namespacePrefix,
             allSObjects,
+            sObjsDesc = {},
             creds;
 
         var avatarCache = CacheFactory.get("avatarCache");
@@ -43,6 +45,8 @@
         return exports;
 
         ////////////////
+
+        // public methods.
 
         function setLoginCreds(credential) {
             creds = credential;
@@ -83,7 +87,7 @@
             }).then(
                 function (user) {
                     currentUser = user;
-                    console.log("Current User:", user);
+                    //console.log("Current User:", user);
                     deferred.resolve(user);
                 },
                 function (error) {
@@ -114,6 +118,9 @@
             return deferred.promise;
         }
 
+        // usage: CommonService.getAllSObjects().then(function(allSObjects) {
+        //            console.log(result);
+        //        });        
         function getAllSObjects(refresh) {
             var deferred = $q.defer();
 
@@ -125,16 +132,50 @@
                 path: '/services/data/v36.0/sobjects'
             }).then(function (result) {
                 allSObjects = {};
-                lodash.each(result.sobjects, function(value){
-                    allSObjects[value.name] = value;     
+                lodash.each(result.sobjects, function (value) {
+                    allSObjects[value.name] = value;
                 });
-                console.log(allSObjects);
+                //console.log(allSObjects);
+                deferred.resolve(allSObjects);
             }, function (error) {
                 deferred.reject(error);
                 console.log("Failed to getAllSObjects");
                 console.log(error);
             });
-            
+
+            return deferred.promise;
+        }
+
+        // usage: CommonService.getSObjectDescription('account')
+        //        .then(function (objDescription) {
+        //            console.log(result);
+        //        });
+
+        function getSObjectDescription(objectType, refresh) {
+            var deferred = $q.defer();
+
+            getAllSObjects().then(function () {
+                var sObj = allSObjects[lodash.capitalize(objectType)];
+                if (lodash.isNil(sObj)) {
+                    console.log("objectType is invalid.");
+                    deferred.reject(new Error("objectType is invalid."));
+                }
+
+                force.request({
+                    path: sObj.urls.describe
+                }).then(function (objDescription) {
+                    //console.log(objDescription);
+                    deferred.resolve(objDescription);
+                }, function (error) {
+                    deferred.reject(error);
+                    console.log("Failed to getAllSObjects");
+                    console.log(error);
+                });
+
+            }, function (error) {
+                deferred.reject(error);
+            });
+
             return deferred.promise;
         }
     }
