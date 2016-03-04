@@ -47,17 +47,28 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
                             userId: force.getUserId()
                         };
                     }
+
+                    // initialize bunch of service and metadata here.
                     CommonService.setLoginCreds(credential);
 
-                    CommonService.getCurrentUser(true).then(
-                        function (user) {
-                            $rootScope.currentUser = user;
-                            CommonService.getAvatarUrlById($rootScope.currentUser.Id).then(function (imgUrl) {
-                                $rootScope.myAvatar = imgUrl;
-                            });
+                    CommonService.getOrgNamespace()
+                        .then(function (namespace) {
+                            console.log("OrgNamespace:", namespace);
 
-                            chatFactory.setOnline($rootScope.currentUser.Id);
+                            return CommonService.getCurrentUser(true);
+                        }).then(
+                            function (user) {
+                                console.log("current user:",user);
+                                $rootScope.currentUser = user;
+                                CommonService.getAvatarUrlById($rootScope.currentUser.Id).then(function (imgUrl) {
+                                    $rootScope.myAvatar = imgUrl;
+                                });
 
+                                chatFactory.setOnline($rootScope.currentUser.Id);
+
+                            }).catch(function (error) {
+                                console.log("failed execute CommonService:", error);
+                        
                         });
                     $state.go('app.contactlist');
                 },

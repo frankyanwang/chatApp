@@ -27,6 +27,7 @@
         CacheFactory.createCache('avatarCache', {
             storageMode: "localStorage"
         });
+
         //        CacheFactory.createCache('contactListCache', {
         //            storageMode: "localStorage"
         //        });
@@ -42,6 +43,7 @@
             allSObjects,
             sObjsDesc = {},
             creds;
+
 
         var avatarCache = CacheFactory.get("avatarCache");
 
@@ -122,44 +124,38 @@
         }
 
         function resolvedObjectType(modelClass) {
-            var deferred = $q.defer();
-
             var isCustomObject = false;
             var objectType = modelClass.objectType || modelClass.prototype.printClassName();
-            
+
             if (modelClass.isCustomObject || modelClass.prototype.isCustomObject) {
                 isCustomObject = true;
-            }            
+            }
 
-            getOrgNamespace().then(function (namespacePrefix) {
-                var resolvedName = objectType;
-                if (isCustomObject) {
-                    //remove __c because we will add later.
-                    if(resolvedName.slice(-3) === '__c'){
-                        resolvedName = resolvedName.slice(0,-3);    
-                    }
-                    
-                    if (_.isEmpty(namespacePrefix)) {
-                        resolvedName = resolvedName + "__c";
-                    } else {
-                        resolvedName = namespacePrefix + "__" + resolvedName + "__c";
-                    }
-                    deferred.resolve(resolvedName);
-                } else {
-                    // if not custom object, should remove __c in the end.
-                    if(resolvedName.slice(-3) === '__c'){
-                        resolvedName = resolvedName.slice(0,-3);    
-                    }
-                    
-                    if(resolvedName.indexOf("__") > -1 && !_.isEmpty(namespacePrefix)) {
-                        resolvedName = namespacePrefix + "__" + resolvedName;
-                    }
-                    deferred.resolve(resolvedName); 
+            var resolvedName = objectType;
+
+            if (isCustomObject) {
+                //remove __c because we will add later.
+                if (resolvedName.slice(-3) === '__c') {
+                    resolvedName = resolvedName.slice(0, -3);
                 }
 
-            });
+                if (_.isEmpty(namespacePrefix)) {
+                    resolvedName = resolvedName + "__c";
+                } else {
+                    resolvedName = namespacePrefix + "__" + resolvedName + "__c";
+                }
+            } else {
+                // if not custom object, should remove __c in the end.
+                if (resolvedName.slice(-3) === '__c') {
+                    resolvedName = resolvedName.slice(0, -3);
+                }
 
-            return deferred.promise;
+                if (resolvedName.indexOf("__") > -1 && !_.isEmpty(namespacePrefix)) {
+                    resolvedName = namespacePrefix + "__" + resolvedName;
+                }
+            }
+
+            return resolvedName;
         }
 
         // usage: CommonService.getAllSObjects().then(function(allSObjects) {
