@@ -1,4 +1,3 @@
-<!--<ion-view view-title="My Users" ng-controller="UserListController as vm">-->
 <ion-view view-title="<i class='icon ion-android-contacts'></i> My Users">
 
     <ion-nav-buttons side="left">
@@ -13,11 +12,11 @@
 
     <ion-content class="has-header user-list">
         <ion-list>
-            <!--            <ion-item ng-repeat="user in userListController.users" href="#/app/{{user.Id}}/chat">-->
-            <ion-item ng-class="{'item-avatar': userListController.displayAvatar}" ng-repeat="user in userListController.users" ui-sref="app.chat({userId: user.Id, userName: user.Name})">
-                <img ng-show="userListController.displayAvatar" ng-src="{{user.imgUrl}}"> 
+            <!--            <ion-item ng-repeat="user in vm.users" href="#/app/{{user.Id}}/chat">-->
+            <ion-item ng-class="{'item-avatar': vm.displayAvatar}" ng-repeat="user in vm.users" ui-sref="app.chat({userId: user.Id, userName: user.Name})">
+                <img ng-show="vm.displayAvatar" ng-src="{{user.imgUrl}}"> 
                 {{user.Name}} {{currentUser.Id === user.Id ? "(myself)" : ""}}
-                <span class="presence" ng-class="{online: userListController.isUserOnline(user.Id)}"></span>
+                <span class="presence" ng-class="{online: vm.isUserOnline(user.Id)}"></span>
                 <p>{{user.UserRole.Name}}</p>
             </ion-item>
         </ion-list>

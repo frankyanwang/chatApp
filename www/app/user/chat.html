@@ -1,23 +1,23 @@
 <ion-view view-title="Conversation">
     <ion-nav-title>
-        <i class='icon ion-chatbubbles'></i> {{chatController.chatUserName}}
+        <i class='icon ion-chatbubbles'></i> {{vm.chatUserName}}
     </ion-nav-title>
 
     <ion-content class="has-header direct-chat">
 
-        <div ng-repeat="chat in chatController.chats" ng-class="{other: chat.userId === chatController.myId}" class="messages">
+        <div ng-repeat="chat in vm.chats" ng-class="{other: chat.userId === vm.myId}" class="messages">
 
             <div class="message">
-                <img class='chat-image chat-image-default' ng-if="chat.userId === chatController.myId" ng-src = "{{chatController.myAvatar}}" />
+                <img class='chat-image chat-image-default' ng-if="chat.userId === vm.myId" ng-src = "{{vm.myAvatar}}" />
 
-                <img class='chat-image other chat-image-default' ng-if="chat.userId !== chatController.myId" ng-src="{{chatController.chatUserAvatar}}" />
+                <img class='chat-image other chat-image-default' ng-if="chat.userId !== vm.myId" ng-src="{{vm.chatUserAvatar}}" />
 
 
                 <div ng-if="chat.type === undefined || chat.type === 'MESSAGE'">
                     <span>{{chat.body}}</span>
                 </div>
                 <div ng-if="chat.type === 'CONTACT'">
-                    <div class="list card" ng-class="chat.userId === chatController.myId ? 'contact-card': 'contact-card-other'">
+                    <div class="list card" ng-class="chat.userId === vm.myId ? 'contact-card': 'contact-card-other'">
                         <ion-item class="profile-item">
                             <div class="banner">
                             </div>
@@ -51,10 +51,10 @@
     </ion-content>
     <ion-footer-bar keyboard-attach class="bar-stable item-input-inset message-footer">
         <label class="item-input-wrapper">
-            <input type="text" placeholder="Type your message" ng-model="chatController.currentChat" />
+            <input type="text" placeholder="Type your message" ng-model="vm.currentChat" />
         </label>
         <div class="footer-btn-wrap">
-            <button class="button button-clear" type="button" ng-click="chatController.sendMessage()" ng-disabled="!chatController.currentChat || chatController.currentChat === ''">
+            <button class="button button-clear" type="button" ng-click="vm.sendMessage()" ng-disabled="!vm.currentChat || vm.currentChat === ''">
                 Send
             </button>
         </div>

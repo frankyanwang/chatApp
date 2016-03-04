@@ -102,6 +102,8 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
         url: "/contactlist",
         views: {
             'menuContent': {
+                controller: "ContactListController",
+                controllerAs: "vm",                
                 templateUrl: baseURL + "app/contact/contact-list.html",
             }
         }
@@ -111,7 +113,9 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
         url: "/contacts/:contactId",
         views: {
             'menuContent': {
-                templateUrl: baseURL + "app/contact/contact.html",
+                controller: "ContactController",
+                controllerAs: "vm",                  
+                templateUrl: baseURL + "app/contact/contact.html"
             }
         }
     })
@@ -120,7 +124,9 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
         url: "/edit-contact/:contactId",
         views: {
             'menuContent': {
-                templateUrl: baseURL + "app/contact/edit-contact.html",
+                controller: "EditContactController",
+                controllerAs: "vm",                 
+                templateUrl: baseURL + "app/contact/edit-contact.html"
             }
         }
     })
@@ -129,7 +135,9 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
         url: "/create-contact",
         views: {
             'menuContent': {
-                templateUrl: baseURL + "app/contact/create-contact.html",
+                controller: "CreateContactController",
+                controllerAs: "vm",                
+                templateUrl: baseURL + "app/contact/create-contact.html"
             }
         }
     })
@@ -138,7 +146,9 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
         url: "/accountlist",
         views: {
             'menuContent': {
-                templateUrl: baseURL + "app/account/account-list.html",
+                controller: "AccountListController",
+                controllerAs: "vm",                 
+                templateUrl: baseURL + "app/account/account-list.html"
             }
         }
     })
@@ -147,7 +157,9 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
         url: "/accounts/:accountId",
         views: {
             'menuContent': {
-                templateUrl: baseURL + "app/account/account.html",
+                controller: "AccountController",
+                controllerAs: "vm",                  
+                templateUrl: baseURL + "app/account/account.html"
             }
         }
     })
@@ -156,7 +168,9 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
         url: "/orderlist",
         views: {
             'menuContent': {
-                templateUrl: baseURL + "app/order/order-list.html",
+                controller: "OrderListController",
+                controllerAs: "vm",                 
+                templateUrl: baseURL + "app/order/order-list.html"
             }
         }
     })
@@ -165,7 +179,8 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
         url: "/userlist",
         views: {
             'menuContent': {
-                controller: "UserListController as userListController",
+                controller: "UserListController",
+                controllerAs: "vm",
                 templateUrl: baseURL + "app/user/user-list.html"
             }
         }
@@ -178,7 +193,8 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
         },
         views: {
             'menuContent': {
-                controller: "ChatController as chatController",
+                controller: "ChatController",
+                controllerAs: "vm",
                 templateUrl: baseURL + "app/user/chat.html"
             }
         }
