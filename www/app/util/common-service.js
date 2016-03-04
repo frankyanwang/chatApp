@@ -12,6 +12,7 @@
 
         var exports = {
             setLoginCreds: setLoginCreds,
+            getLoginCreds: getLoginCreds,
             getAvatarUrlById: getAvatarUrlById,
             getCurrentUser: getCurrentUser,
             getOrgNamespace: getOrgNamespace,
@@ -21,9 +22,10 @@
         };
 
         // initialize angular cache. TODO: maybe move to service layer.
-        //        CacheFactory.createCache('accessTokenCache', {
-        //            storageMode: "localStorage"
-        //        });        
+        CacheFactory.createCache('accessTokenCache', {
+            storageMode: "localStorage"
+        });
+
         CacheFactory.createCache('avatarCache', {
             storageMode: "localStorage"
         });
@@ -46,6 +48,7 @@
 
 
         var avatarCache = CacheFactory.get("avatarCache");
+        var tokenCache = CacheFactory.get("accessTokenCache");
 
         return exports;
 
@@ -55,6 +58,12 @@
 
         function setLoginCreds(credential) {
             creds = credential;
+            tokenCache.put("creds",creds);
+        }
+        
+        function getLoginCreds(){
+            creds = creds || tokenCache.get('creds');
+            return creds;
         }
 
         function getAvatarUrlById(uid) {

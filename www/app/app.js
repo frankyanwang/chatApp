@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodash', 'angular-cache'])
 
-.run(function ($rootScope, $ionicPlatform, $state, force, forcengOptions, chatFactory, CommonService) {
+.run(function ($rootScope, $ionicPlatform, $state, force, forcengOptions, chatFactory, CommonService, lodash) {
 
     $ionicPlatform.ready(function () {
 
@@ -20,8 +20,8 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
             // org.apache.cordova.statusbar required
             StatusBar.styleDefault();
         }
-
-
+        
+        
         // Initialize forceng
         force.init(forcengOptions);
 
@@ -38,14 +38,15 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
                     console.log("creds from forceng:", creds);
 
                     var credential;
-                    //creds exists when login from real device.
-                    if (creds) {
-                        userId = creds.userId;
+                    //real device
+                    if (creds && creds.userId) {
                         credential = creds;
-                    } else {
-                        credential = {
+                    }
+                    //browser.
+                    else {
+                        credential = lodash.assign({
                             userId: force.getUserId()
-                        };
+                        }, creds);
                     }
 
                     // initialize bunch of service and metadata here.
@@ -62,7 +63,7 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
                                 $rootScope.currentUser = user;
 
                                 chatFactory.setOnline($rootScope.currentUser.Id);
-                                
+
                                 return CommonService.getAvatarUrlById($rootScope.currentUser.Id).then(function (imgUrl) {
                                     $rootScope.myAvatar = imgUrl;
                                 });
@@ -103,7 +104,7 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
         views: {
             'menuContent': {
                 controller: "ContactListController",
-                controllerAs: "vm",                
+                controllerAs: "vm",
                 templateUrl: baseURL + "app/contact/contact-list.html",
             }
         }
@@ -114,7 +115,7 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
         views: {
             'menuContent': {
                 controller: "ContactController",
-                controllerAs: "vm",                  
+                controllerAs: "vm",
                 templateUrl: baseURL + "app/contact/contact.html"
             }
         }
@@ -125,7 +126,7 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
         views: {
             'menuContent': {
                 controller: "EditContactController",
-                controllerAs: "vm",                 
+                controllerAs: "vm",
                 templateUrl: baseURL + "app/contact/edit-contact.html"
             }
         }
@@ -136,7 +137,7 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
         views: {
             'menuContent': {
                 controller: "CreateContactController",
-                controllerAs: "vm",                
+                controllerAs: "vm",
                 templateUrl: baseURL + "app/contact/create-contact.html"
             }
         }
@@ -147,7 +148,7 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
         views: {
             'menuContent': {
                 controller: "AccountListController",
-                controllerAs: "vm",                 
+                controllerAs: "vm",
                 templateUrl: baseURL + "app/account/account-list.html"
             }
         }
@@ -158,7 +159,7 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
         views: {
             'menuContent': {
                 controller: "AccountController",
-                controllerAs: "vm",                  
+                controllerAs: "vm",
                 templateUrl: baseURL + "app/account/account.html"
             }
         }
@@ -169,7 +170,7 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
         views: {
             'menuContent': {
                 controller: "OrderListController",
-                controllerAs: "vm",                 
+                controllerAs: "vm",
                 templateUrl: baseURL + "app/order/order-list.html"
             }
         }

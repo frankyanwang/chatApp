@@ -226,7 +226,7 @@ angular.module('forceng', [])
         obj = parseQueryString(queryString);
         oauth = obj;
         tokenStore['forceOAuth'] = JSON.stringify(oauth);
-        if (deferredLogin) deferredLogin.resolve();
+        if (deferredLogin) deferredLogin.resolve(oauth);
       } else if (url.indexOf("error=") > 0) {
         queryString = decodeURIComponent(url.substring(url.indexOf('?') + 1));
         obj = parseQueryString(queryString);
