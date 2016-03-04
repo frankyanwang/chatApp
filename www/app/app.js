@@ -58,19 +58,21 @@ angular.module('vlocityApp', ['ionic', 'forceng', 'config', 'firebase', 'ngLodas
                             return CommonService.getCurrentUser(true);
                         }).then(
                             function (user) {
-                                console.log("current user:",user);
+                                console.log("current user:", user);
                                 $rootScope.currentUser = user;
-                                CommonService.getAvatarUrlById($rootScope.currentUser.Id).then(function (imgUrl) {
+
+                                chatFactory.setOnline($rootScope.currentUser.Id);
+                                
+                                return CommonService.getAvatarUrlById($rootScope.currentUser.Id).then(function (imgUrl) {
                                     $rootScope.myAvatar = imgUrl;
                                 });
 
-                                chatFactory.setOnline($rootScope.currentUser.Id);
+                            }).finally(function () {
+                            $state.go('app.contactlist');
+                        }).catch(function (error) {
+                            console.log("failed execute CommonService:", error);
 
-                            }).catch(function (error) {
-                                console.log("failed execute CommonService:", error);
-                        
                         });
-                    $state.go('app.contactlist');
                 },
                 function (error) {
                     alert("Login was not successful");
