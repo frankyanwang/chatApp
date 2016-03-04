@@ -3,6 +3,7 @@
     angular
         .module('vlocityApp')
         .factory('Order', ['SObject', 'lodash', function (SObject, lodash) {
+            var _ = lodash;
 
             //Constructor, with class name
             function Order(atts) {
@@ -13,7 +14,7 @@
 
             // subclass extends superclass using lodash .create.
             // also define its own public methods here.            
-            Order.prototype = lodash.create(SObject.prototype, {
+            Order.prototype = _.create(SObject.prototype, {
                 constructor: Order
             });
 

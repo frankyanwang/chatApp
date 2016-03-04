@@ -9,6 +9,8 @@
 
     /* @ngInject */
     function ChatController($stateParams, chatFactory, $rootScope, force, $http, lodash, CommonService) {
+        var _ = lodash;
+        
         var vm = this;
         vm.property = 'ChatController';
 
@@ -38,14 +40,14 @@
             var sObjTypeResults = vm.currentChat.match(/#([A-Za-z0-9_]+)/);
             var keywordStrResults = vm.currentChat.match(/@([A-Za-z0-9_ ]+)@/);
 
-            if (!lodash.isNil(sObjTypeResults) && !lodash.isNil(keywordStrResults)) {
+            if (!_.isNil(sObjTypeResults) && !_.isNil(keywordStrResults)) {
 
                 var sObjectType = sObjTypeResults[1].toUpperCase();
                 var keywardStr = keywordStrResults[1].toLowerCase();
 
                 // replace first #contact to '' and replace @keyword@ to keyword.
-                vm.currentChat = lodash.replace(vm.currentChat, /#([A-Za-z0-9_]+ )/, '');
-                vm.currentChat = lodash.replace(vm.currentChat, /@([A-Za-z0-9_ ]+)@/, keywardStr);
+                vm.currentChat = _.replace(vm.currentChat, /#([A-Za-z0-9_]+ )/, '');
+                vm.currentChat = _.replace(vm.currentChat, /@([A-Za-z0-9_ ]+)@/, keywardStr);
 
                 if (sObjectType === "CONTACT") {
                     force.query("select id,name,title,phone,mobilephone,email from " + sObjectType + " where name like '%" + keywardStr + "%'").then(

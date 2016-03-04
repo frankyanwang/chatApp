@@ -8,6 +8,7 @@
 
     /* @ngInject */
     function VLCObjectQueryManager(force, lodash, $q, SObject, Contact, Account, User, Order) {
+        var _ = lodash;
 
         var exports = {
             findAll: findAll,
@@ -26,7 +27,7 @@
                 orderBy = queryParams['orderBy'],
                 limit = queryParams['limit'];
 
-            if (!lodash.isString(modelType) || modelType.length === 0) {
+            if (!_.isString(modelType) || modelType.length === 0) {
                 //throw exception
                 return undefined;
             }
@@ -34,9 +35,9 @@
             var query = "select ";
 
             //check fields
-            if (lodash.isArray(fields) && fields.length > 0) {
-                query = query + lodash.join(fields, ", ");
-            } else if (lodash.isString(fields) && fields.length > 0) {
+            if (_.isArray(fields) && fields.length > 0) {
+                query = query + _.join(fields, ", ");
+            } else if (_.isString(fields) && fields.length > 0) {
                 query = query + fields;
             } else {
                 //query for entire many all fields for the object.
@@ -45,18 +46,18 @@
             query = query + " from " + modelType;
 
             // where has value.
-            if (lodash.isString(where) && where.length > 0) {
+            if (_.isString(where) && where.length > 0) {
                 query = query + " where " + where;
             } else {
 
             }
 
             //check order by
-            if (lodash.isString(orderBy) && orderBy.length > 0) {
+            if (_.isString(orderBy) && orderBy.length > 0) {
                 query = query + " order by " + orderBy + " NULLS LAST";
             }
 
-            if (lodash.isNumber(limit) && limit > 0) {
+            if (_.isNumber(limit) && limit > 0) {
                 query = query + " limit " + limit;
             }
 
@@ -65,7 +66,7 @@
             force.query(query).then(
                 function (data) {
                     var sObjects = [];
-                    lodash.forEach(data.records, function (value) {
+                    _.forEach(data.records, function (value) {
                         var sObject = createModel(modelType, value);
                         sObjects.push(sObject);
                     });
@@ -87,21 +88,21 @@
         function find(modelType, objId, queryParams) {
             var fields = queryParams['fields'];
 
-            if (!lodash.isString(modelType) || modelType.length === 0) {
+            if (!_.isString(modelType) || modelType.length === 0) {
                 //throw exception
                 return undefined;
             }
 
-            if (!lodash.isString(objId) || objId.length === 0) {
+            if (!_.isString(objId) || objId.length === 0) {
                 //throw exception
                 return undefined;
             }
 
             var fieldQuery;
             //check fields
-            if (lodash.isArray(fields) && fields.length > 0) {
-                fieldQuery = lodash.join(fields, ", ");
-            } else if (lodash.isString(fields) && fields.length > 0) {
+            if (_.isArray(fields) && fields.length > 0) {
+                fieldQuery = _.join(fields, ", ");
+            } else if (_.isString(fields) && fields.length > 0) {
                 fieldQuery = fields;
             }
 
@@ -130,7 +131,7 @@
         function createModel(modelType, attrs) {
             var sObject;
 
-            var type = lodash.upperCase(modelType);
+            var type = _.upperCase(modelType);
 
             if (type === "CONTACT") {
                 sObject = new Contact(attrs);

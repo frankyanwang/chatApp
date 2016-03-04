@@ -3,6 +3,7 @@
     angular
         .module('vlocityApp')
         .factory('Contact', ['SObject', 'lodash', function (SObject, lodash) {
+            var _ = lodash;
 
             //Constructor, with class name
             function Contact(atts) {
@@ -13,7 +14,7 @@
         
             // subclass extends superclass using lodash .create.
             // also define its own public methods here.            
-            Contact.prototype = lodash.create(SObject.prototype, {
+            Contact.prototype = _.create(SObject.prototype, {
                 constructor: Contact
             });
             
