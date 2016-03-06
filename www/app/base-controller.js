@@ -15,7 +15,7 @@
         $scope.logout = function () {
             console.log("base controller logout!");
             alert("logout");
-//            force.logout();
+            force.discardToken();
         }
 
         activate();
