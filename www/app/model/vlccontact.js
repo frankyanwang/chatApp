@@ -23,8 +23,10 @@
             // public Static Properties.
             // Prevent modifications to private variable incase we are reusing it.
             Contact.namesOfFieldsToRequest = angular.copy(namesOfFieldsToRequest);
-//            Contact.objectType = "Contact";
-//            Contact.isCustomObject = true;
+            
+            //optional public static properties, if not specify it will use default.
+            Contact.objectType = "Contact";
+            Contact.isCustomObject = false;
             
             return Contact;
 

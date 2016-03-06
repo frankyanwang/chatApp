@@ -27,9 +27,6 @@
         //        });
 
 
-        console.log(CommonService.resolvedObjectType(Contact));
-
-
         ////////////////
 
         function activate() {

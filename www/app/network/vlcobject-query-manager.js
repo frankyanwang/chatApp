@@ -28,13 +28,15 @@
                 limit = queryParams['limit'];
 
             var deferred = $q.defer();
-            
+
             var objectType;
-            if(_.isObject(modelClass)){
-                objectType = modelClass.objectType || modelClass.prototype.printClassName();                                
-            }else if(_.isString(modelClass)) {
+            if (_.isObject(modelClass)) {
+                // or we can use modelClass.prototype.resolvedObjectType()
+                objectType = new modelClass().resolvedObjectType();
+                console.log("resolvedType", objectType);
+            } else if (_.isString(modelClass)) {
                 objectType = modelClass;
-            }else{
+            } else {
                 console.log("modelClass: ", modelClass);
                 deferred.reject(new Error("findAll first param is invalid."));
             }
@@ -92,15 +94,17 @@
         // note: fields can be either string or array. queryParams is optional.        
         function find(modelClass, objId, queryParams) {
             var fields = queryParams['fields'];
-            
+
             var deferred = $q.defer();
-            
+
             var objectType;
-            if(_.isObject(modelClass)){
-                objectType = modelClass.objectType || modelClass.prototype.printClassName();                                
-            }else if(_.isString(modelClass)) {
+            if (_.isObject(modelClass)) {      
+                // or we can use modelClass.prototype.resolvedObjectType()
+                objectType = new modelClass().resolvedObjectType();
+                console.log("resolvedType", objectType);                
+            } else if (_.isString(modelClass)) {
                 objectType = modelClass;
-            }else{
+            } else {
                 console.log("modelClass: ", modelClass);
                 deferred.reject(new Error("findAll first param is invalid."));
             }

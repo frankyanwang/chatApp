@@ -4,10 +4,10 @@
         .module('vlocityApp')
         .factory('CommonService', CommonService);
 
-    CommonService.$inject = ['$http', '$q', 'CacheFactory', 'force', 'VLCObjectQueryManager', 'lodash'];
+    CommonService.$inject = ['$http', '$q', 'CacheFactory', 'force', 'VLCObjectQueryManager', 'lodash','SObject'];
 
     /* @ngInject */
-    function CommonService($http, $q, CacheFactory, force, VLCObjectQueryManager, lodash) {
+    function CommonService($http, $q, CacheFactory, force, VLCObjectQueryManager, lodash, SObject) {
         var _ = lodash;
 
         var exports = {
@@ -16,7 +16,6 @@
             getAvatarUrlById: getAvatarUrlById,
             getCurrentUser: getCurrentUser,
             getOrgNamespace: getOrgNamespace,
-            resolvedObjectType: resolvedObjectType,
             getAllSObjects: getAllSObjects,
             getSObjectDescription: getSObjectDescription
         };
@@ -122,6 +121,7 @@
 
             force.query("SELECT NamespacePrefix FROM ApexClass WHERE Name = 'VlocityOrganization'").then(function (result) {
                 namespacePrefix = result.records[0].NamespacePrefix;
+                SObject.prototype.namespacePrefix = namespacePrefix;
                 deferred.resolve(namespacePrefix);
             }, function (error) {
                 deferred.reject(error);
@@ -131,43 +131,7 @@
 
             return deferred.promise;
         }
-
-        function resolvedObjectType(modelClass) {
-            var isCustomObject = false;
-
-            var objectType = modelClass.objectType || modelClass.prototype.printClassName();
-
-            if (modelClass.isCustomObject || modelClass.prototype.isCustomObject) {
-                isCustomObject = true;
-            }
-
-            var resolvedName = objectType;
-
-            if (isCustomObject) {
-                //remove __c because we will add later.
-                if (resolvedName.slice(-3) === '__c') {
-                    resolvedName = resolvedName.slice(0, -3);
-                }
-
-                if (_.isEmpty(namespacePrefix)) {
-                    resolvedName = resolvedName + "__c";
-                } else {
-                    resolvedName = namespacePrefix + "__" + resolvedName + "__c";
-                }
-            } else {
-                // if not custom object, should remove __c in the end.
-                if (resolvedName.slice(-3) === '__c') {
-                    resolvedName = resolvedName.slice(0, -3);
-                }
-
-                if (resolvedName.indexOf("__") > -1 && !_.isEmpty(namespacePrefix)) {
-                    resolvedName = namespacePrefix + "__" + resolvedName;
-                }
-            }
-
-            return resolvedName;
-        }
-
+        
         // usage: CommonService.getAllSObjects().then(function(allSObjects) {
         //            console.log(result);
         //        });        
