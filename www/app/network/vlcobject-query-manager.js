@@ -21,15 +21,22 @@
 
         // queryParams: {fields: "id, name", where: "", orderBy: "", limit: 50}
         // note: fields can be either string or array. queryParams is optional.
-        function findAll(modelType, queryParams) {
+        function findAll(modelClass, queryParams) {
             var fields = queryParams['fields'],
                 where = queryParams['where'],
                 orderBy = queryParams['orderBy'],
                 limit = queryParams['limit'];
 
-            if (!_.isString(modelType) || modelType.length === 0) {
-                //throw exception
-                return undefined;
+            var deferred = $q.defer();
+            
+            var objectType;
+            if(_.isObject(modelClass)){
+                objectType = modelClass.objectType || modelClass.prototype.printClassName();                                
+            }else if(_.isString(modelClass)) {
+                objectType = modelClass;
+            }else{
+                console.log("modelClass: ", modelClass);
+                deferred.reject(new Error("findAll first param is invalid."));
             }
 
             var query = "select ";
@@ -43,7 +50,7 @@
                 //query for entire many all fields for the object.
             }
 
-            query = query + " from " + modelType;
+            query = query + " from " + objectType;
 
             // where has value.
             if (_.isString(where) && where.length > 0) {
@@ -61,13 +68,11 @@
                 query = query + " limit " + limit;
             }
 
-            var deferred = $q.defer();
-
             force.query(query).then(
                 function (data) {
                     var sObjects = [];
                     _.forEach(data.records, function (value) {
-                        var sObject = createModel(modelType, value);
+                        var sObject = createModel(objectType, value);
                         sObjects.push(sObject);
                     });
 
@@ -85,12 +90,19 @@
 
         // queryParams: {fields: "id, name"}
         // note: fields can be either string or array. queryParams is optional.        
-        function find(modelType, objId, queryParams) {
+        function find(modelClass, objId, queryParams) {
             var fields = queryParams['fields'];
-
-            if (!_.isString(modelType) || modelType.length === 0) {
-                //throw exception
-                return undefined;
+            
+            var deferred = $q.defer();
+            
+            var objectType;
+            if(_.isObject(modelClass)){
+                objectType = modelClass.objectType || modelClass.prototype.printClassName();                                
+            }else if(_.isString(modelClass)) {
+                objectType = modelClass;
+            }else{
+                console.log("modelClass: ", modelClass);
+                deferred.reject(new Error("findAll first param is invalid."));
             }
 
             if (!_.isString(objId) || objId.length === 0) {
@@ -106,18 +118,16 @@
                 fieldQuery = fields;
             }
 
-            var deferred = $q.defer();
-
-            force.retrieve(modelType, objId, fieldQuery).then(
+            force.retrieve(objectType, objId, fieldQuery).then(
                 function (data) {
-                    var sObject = createModel(modelType, data);
+                    var sObject = createModel(objectType, data);
 
                     deferred.resolve(sObject);
                 },
                 function (error) {
                     deferred.reject(error);
 
-                    console.log("Find error:", modelType);
+                    console.log("Find error:", objectType);
                     console.log(error);
                 });
 
@@ -128,10 +138,10 @@
 
         //////////////// Private Functions.
 
-        function createModel(modelType, attrs) {
+        function createModel(objectType, attrs) {
             var sObject;
 
-            var type = _.upperCase(modelType);
+            var type = _.upperCase(objectType);
 
             if (type === "CONTACT") {
                 sObject = new Contact(attrs);

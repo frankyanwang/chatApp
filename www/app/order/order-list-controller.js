@@ -19,7 +19,7 @@
         ////////////////
 
         function activate() {
-            VLCObjectQueryManager.findAll('order', {
+            VLCObjectQueryManager.findAll(Order, {
                 fields: Order.namesOfFieldsToRequest
             }).then(function (orderArray) {
                 vm.orders = orderArray;

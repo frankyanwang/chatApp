@@ -22,7 +22,7 @@
 
         function activate() {
 
-            VLCObjectQueryManager.findAll('user', {
+            VLCObjectQueryManager.findAll(User, {
                 fields: User.namesOfFieldsToRequest
                     //                where: "Name = 'Frank Wang' or Name = 'Sissi Chen'"
             }).then(

@@ -20,7 +20,7 @@
 
         function activate() {
             
-            VLCObjectQueryManager.findAll('account', {
+            VLCObjectQueryManager.findAll(Account, {
                 fields: Account.namesOfFieldsToRequest,
                 limit: 50
             }).then(

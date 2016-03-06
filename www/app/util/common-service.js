@@ -134,6 +134,7 @@
 
         function resolvedObjectType(modelClass) {
             var isCustomObject = false;
+
             var objectType = modelClass.objectType || modelClass.prototype.printClassName();
 
             if (modelClass.isCustomObject || modelClass.prototype.isCustomObject) {

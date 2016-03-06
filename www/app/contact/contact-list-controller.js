@@ -34,7 +34,7 @@
 
         function activate() {
 
-            VLCObjectQueryManager.findAll('contact', {
+            VLCObjectQueryManager.findAll(Contact, {
                 fields: Contact.namesOfFieldsToRequest,
                 limit: 50
             }).then(

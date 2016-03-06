@@ -5,10 +5,10 @@
         .module('vlocityApp')
         .controller('AccountController', AccountController);
 
-    AccountController.$inject = ['$stateParams','VLCObjectQueryManager'];
+    AccountController.$inject = ['$stateParams','VLCObjectQueryManager','Account'];
 
     /* @ngInject */
-    function AccountController($stateParams, VLCObjectQueryManager) {
+    function AccountController($stateParams, VLCObjectQueryManager, Account) {
         var vm = this;
         vm.property = 'AccountController';
 
@@ -17,7 +17,7 @@
         ////////////////
 
         function activate() {
-            VLCObjectQueryManager.find('account', $stateParams.accountId, {}).then(
+            VLCObjectQueryManager.find(Account, $stateParams.accountId, {}).then(
                 function (account) {
                     vm.account = account;
                 }, function(e){
