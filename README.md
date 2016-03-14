@@ -33,6 +33,44 @@ $ ionic emulate ios --target="iPhone-6"
 $ ionic run ios
 ```
 
+Check list of Cordova plugins: (this is what I have on my local)
+```bash
+$ cordova plugin list
+com.salesforce 4.1.1 "SalesforceMobileSDK Plugins"
+cordova-plugin-console 1.0.2 "Console"
+cordova-plugin-device 1.1.1 "Device"
+cordova-plugin-inappbrowser 1.2.1 "InAppBrowser"
+cordova-plugin-screen-orientation 1.4.0 "Screen Orientation"
+cordova-plugin-whitelist 1.2.1 "Whitelist"
+ionic-plugin-keyboard 1.0.8 "Keyboard"
+phonegap-plugin-push 1.5.3 "PushPlugin"
+```
+
+Install SalesforceMobileSDK Cordova plugin:
+```bash
+$ ionic plugin add https://github.com/forcedotcom/SalesforceMobileSDK-CordovaPlugin
+```
+
+Install Cordova plugin: (either one is okay.)
+```bash
+$ ionic plugin add name_of_plugin(cordova-plugin-screen-orientation)
+$ cordova plugin add name_of_plugin
+```
+
+These are the Issue I run into:
+
+Plugin doesn't support this project's cordova-android version. cordova-android: 4.1.1, failed version requirement: 5.0.0
+```bash
+$ cordova platform update android@5.0.0
+```
+
+Plugin doesn't support this project's cordova-ios version. cordova-ios: 3.8.0, failed version requirement: 3.9.2
+```bash
+$ cordova platform update ios@3.9.2
+```
+
+
+
 
 ## Using this project
 
