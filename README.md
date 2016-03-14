@@ -69,7 +69,13 @@ Plugin doesn't support this project's cordova-ios version. cordova-ios: 3.8.0, f
 $ cordova platform update ios@3.9.2
 ```
 
-
+I also had problem using a bad MicroUSB cable connect with my android device, the code doesn't push correctly. The way to debug connection issue is to run ADB (android debug bridge). Make sure your device is listed below.
+```bash
+$ cd /Users/frankwang/Library/Android/sdk/platform-tools
+$ ./adb devices
+List of devices attached
+emulator-5554 device
+```
 
 
 ## Using this project
