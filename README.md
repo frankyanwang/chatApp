@@ -33,6 +33,8 @@ $ ionic emulate ios --target="iPhone-6"
 $ ionic run ios
 ```
 
+1. ... or (for iOS) open **platforms/ios/myApp.xcodeproj** in Xcode and run the app on your device. If the build fails in Xcode, select the myApp target, click the **Build Settings** tab, search for **bitcode**, select **No** for **Enable Bitcode**, and try again.
+
 Check list of Cordova plugins: (this is what I have on my local)
 ```bash
 $ cordova plugin list
@@ -78,17 +80,33 @@ emulator-5554 device
 ```
 
 
-## Using this project
+## Running in the browser
 
-We recommend using the [Ionic CLI](https://github.com/driftyco/ionic-cli) to create new Ionic projects that are based on this project but use a ready-made starter template.
+Because of the browser's cross-origin restrictions, your Ionic application hosted on your own server (or localhost) will not be able to make API calls directly to the *.salesforce.com domain. The solution is to proxy your API calls through your own server. You can use your own proxy server or use [ForceServer](https://github.com/ccoenraets/force-server), a simple development server for Force.com. It provides two main features:
 
-```bash
-$ force-server
-```
+- A **Proxy Server** to avoid cross-domain policy issues when invoking Salesforce REST services. (The Chatter API supports CORS, but other APIs don’t yet)
+- A **Local Web Server** to (1) serve the OAuth callback URL defined in your Connected App, and (2) serve the whole app during development and avoid cross-domain policy issues when loading files (for example, templates) from the local file system.
 
-More info on this can be found on the Ionic [Getting Started](http://ionicframework.com/getting-started) page and the [Ionic CLI](https://github.com/driftyco/ionic-cli) repo.
+To run the application in the browser using ForceServer:
 
-## Issues
-Issues have been disabled on this repo, if you do find an issue or have a question consider posting it on the [Ionic Forum](http://forum.ionicframework.com/).  Or else if there is truly an error, follow our guidelines for [submitting an issue](http://ionicframework.com/submit-issue/) to the main Ionic repository.
-# ionic-salesforce-bootstrap
-# chatApp
+1. Install ForceServer
+
+    ```bash
+    $ sudo npm install -g force-server
+    ```
+
+2. Navigate (cd) to your Ionic app's **www** directory  
+
+3. Start the server
+
+    ```
+    force-server
+    ```
+
+    This command will start the server on port 8200, and automatically load your app (http://localhost:8200) in a browser window. You'll see the Salesforce login window (make sure you enable the popup), and the list of contacts will appear after you log in. If you don’t have a free Salesforce Developer Edition to log in to, you can create one [here](http://developer.salesforce.com/signup).
+
+    You can change the port number and the web root. Type the following command for more info:
+
+    ```
+    force-server --help
+    ```
