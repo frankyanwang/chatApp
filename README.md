@@ -14,11 +14,12 @@ $ brew uninstall android-sdk
 Install Cordova:
 ```bash
 $ sudo npm install -g ionic cordova
+$ sudo npm install -g ionic cordova@5.4.1 (prefered version)
 ```
 
 Setup for Android:
 ```bash
-$ ionic platform add android
+$ ionic platform add android@5.0.0
 $ ionic build android
 $ ionic emulate android
 $ ionic run android
@@ -27,7 +28,7 @@ $ ionic run android
 Setup for iOS:  (Please install latest Xcode before)
 ```bash
 $ npm install -g ios-sim
-$ ionic platform add ios
+$ ionic platform add ios@3.9.2
 $ ionic build ios
 $ ionic emulate ios --target="iPhone-6"
 $ ionic run ios
