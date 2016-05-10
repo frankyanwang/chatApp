@@ -11,27 +11,45 @@ If you previously install Android SDK using HomeBrew, it is time to uninstall it
 $ brew uninstall android-sdk  
 ```
 
+Due to use of Salesforce Cordova plugins library, there are currently many restrictions, so please use recommanded versions of libraries to avoid problems.
+
+Corova CLI:  5.4.0
+Cordova platform android: 5.0.0
+shelljs: 0.5.3
+
+For Android build, current Ionic generated Android project doesn't work well with Salesforce Cordova plugins. A special version of ForceDroid (forcedroid-4.1.1.tgz sent from Bharath Hariharan) are used to generate the project.
+
 Install Cordova:
 ```bash
-$ sudo npm install -g ionic cordova
-$ sudo npm install -g ionic cordova@5.4.1 (prefered version)
+$ sudo npm install -g ionic cordova@5.4.0 (prefered version)
 ```
 
-Setup for Android:
-```bash
-$ ionic platform add android@5.0.0
-$ ionic build android
-$ ionic emulate android
-$ ionic run android
-```
+Assume you are in your project root folder $.
 
 Setup for iOS:  (Please install latest Xcode before)
 ```bash
 $ npm install -g ios-sim
 $ ionic platform add ios@3.9.2
 $ ionic build ios
+1. Run on iOS simulator.
 $ ionic emulate ios --target="iPhone-6"
+2. Run on iOS real device, if no device, fall back to Simulator.
 $ ionic run ios
+```
+
+Setup for Android: (android generated code are checked in already. no need to go through the creation process again.)
+```bash
+$ grunt android (copy dev files to generated folder)
+$ cd platforms/android
+$ ./gradlew assembleDebug (use assembleDebug for now, this will build the android apk file)
+1. Run on real device.
+assume you have adb on your path. otherwise use "/Users/frankwang/Library/Android/sdk/platform-tools/adb" instead.
+$ adb devices (find list of devices connected to your computer)
+$ adb -s DEVICE_ID install -r build/outputs/apk/android-debug.apk (push apk file to your selected device. note: -s DEVICE_ID is optional if there is only one on the list.)
+2. Run on emulator.
+$ emulator -list-avds (find list of emulators you have)
+$ emulator @Nexus_6_API_23 (@Nexus_6_API_23 is your emulator name)
+$ emulator -avd @Nexus_6_API_23 -netspeed full -netdelay none (another way to launch emulator it)
 ```
 
 1. ... or (for iOS) open **platforms/ios/myApp.xcodeproj** in Xcode and run the app on your device. If the build fails in Xcode, select the myApp target, click the **Build Settings** tab, search for **bitcode**, select **No** for **Enable Bitcode**, and try again.
