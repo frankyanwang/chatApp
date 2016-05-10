@@ -31,25 +31,40 @@ Setup for iOS:  (Please install latest Xcode before)
 $ npm install -g ios-sim
 $ ionic platform add ios@3.9.2
 $ ionic build ios
+
 1. Run on iOS simulator.
 $ ionic emulate ios --target="iPhone-6"
+
 2. Run on iOS real device, if no device, fall back to Simulator.
 $ ionic run ios
 ```
 
-Setup for Android: (android generated code are checked in already. no need to go through the creation process again.)
+Setup for Android: (Note: android generated code are checked in already. 
+So no need to go through the creation process again.)
+
 ```bash
-$ grunt android (copy dev files to generated folder)
+Copy dev files to generated android assets folder
+$ grunt android 
+
+Go to android folder to run build command there. You can use a second terminal for it.
 $ cd platforms/android
 $ ./gradlew assembleDebug (use assembleDebug for now, this will build the android apk file)
+
 1. Run on real device.
-assume you have adb on your path. otherwise use "/Users/frankwang/Library/Android/sdk/platform-tools/adb" instead.
-$ adb devices (find list of devices connected to your computer)
-$ adb -s DEVICE_ID install -r build/outputs/apk/android-debug.apk (push apk file to your selected device. note: -s DEVICE_ID is optional if there is only one on the list.)
+assume you have adb on your path. Otherwise use full path "/Users/frankwang/Library/Android/sdk/platform-tools/adb" instead.
+
+Find list of devices connected to your computer
+$ adb devices
+
+Deploy apk file to your selected device. note: -s DEVICE_ID is optional if there is only one on the list.
+$ adb -s DEVICE_ID install -r build/outputs/apk/android-debug.apk
+
 2. Run on emulator.
-$ emulator -list-avds (find list of emulators you have)
+
+Find list of emulators you currently have.
+$ emulator -list-avds
 $ emulator @Nexus_6_API_23 (@Nexus_6_API_23 is your emulator name)
-$ emulator -avd @Nexus_6_API_23 -netspeed full -netdelay none (another way to launch emulator it)
+$ emulator -avd @Nexus_6_API_23 -netspeed full -netdelay none (Alternative to launch emulator)
 ```
 
 1. ... or (for iOS) open **platforms/ios/myApp.xcodeproj** in Xcode and run the app on your device. If the build fails in Xcode, select the myApp target, click the **Build Settings** tab, search for **bitcode**, select **No** for **Enable Bitcode**, and try again.
