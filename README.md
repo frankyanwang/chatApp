@@ -50,6 +50,11 @@ Go to android folder to run build command there. You can use a second terminal f
 $ cd platforms/android
 $ ./gradlew assembleDebug (use assembleDebug for now, this will build the android apk file)
 
+You might have problems building your app. Two probelms I have seen so far.
+1. Make sure you have Android SDK Build Tools 23.0.1 installed. 
+Android Studio->Preference->Appearance->System Settings->Android SDK->Launch Standalone SDK Manager.
+2. Open gradle-wrapper.properties file, change distributionUrl to gradle-2.3-all.zip.
+
 1. Run on real device.
 assume you have adb on your path. Otherwise use full path "/Users/frankwang/Library/Android/sdk/platform-tools/adb" instead.
 
