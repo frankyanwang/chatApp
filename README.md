@@ -1,7 +1,7 @@
-Ionic Salesforce App Base
+Vlocity Mobile Hybrid App
 =====================
 
-A starting project for Ionic Salesforce App base.
+A starting project for Vlocity Mobile Hybrid App based on Ionic, SalesforceCordovaSDK and AngularJS.
 
 ## Setup this project
 
@@ -149,3 +149,23 @@ To run the application in the browser using ForceServer:
     ```
     force-server --help
     ```
+
+## Coding Guideline
+
+The code is based heavily on John Papa's Angular Style Guide. https://github.com/johnpapa/angular-styleguide/blob/master/a1/README.md
+
+Especially LIFT principall for appa and coding structure. 
+L ocating our code is easy
+I dentify code at a glance
+F lat structure as long as we can
+T ry to stay DRY (Don’t Repeat Yourself) or T-DRY
+
+You can even download the template from here to use in your favorite editor like Bracket or Sublime.
+https://github.com/johnpapa/angular-styleguide/blob/master/a1/README.md#file-templates-and-snippets
+
+
+
+
+
+
+
