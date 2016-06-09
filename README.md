@@ -155,13 +155,65 @@ To run the application in the browser using ForceServer:
 The code is based heavily on John Papa's Angular Style Guide. https://github.com/johnpapa/angular-styleguide/blob/master/a1/README.md
 
 Especially LIFT principall for appa and coding structure. 
-L ocating our code is easy
-I dentify code at a glance
-F lat structure as long as we can
-T ry to stay DRY (Don’t Repeat Yourself) or T-DRY
+
+    1. `L`ocating our code is easy
+    2. `I`dentify code at a glance
+    3. `F`lat structure as long as we can
+    4. `T`ry to stay DRY (Don’t Repeat Yourself) or T-DRY
 
 You can even download the template from here to use in your favorite editor like Bracket or Sublime.
 https://github.com/johnpapa/angular-styleguide/blob/master/a1/README.md#file-templates-and-snippets
+
+Sample Coding structure:
+
+  ```javascript
+(function() {
+    'use strict';
+
+    angular
+        .module('module')
+        .controller('Controller', Controller);
+
+    Controller.$inject = ['dependencies'];
+
+    /* @ngInject */
+    function Controller(dependencies) {
+        var vm = this;
+
+        // bindable members and notification...
+        vm.property = 'Controller';
+
+        vm.func1 = func1;
+        vm.func2 = func2;
+
+        // Notification setup.
+        var listenerCleanFn = $rootScope.$on('event:action', function(event, data) {});
+        $scope.$on('$destroy', function() {
+            listenerCleanFn();
+        });
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+            //main logic for the controller.
+        }
+
+        // public functions
+
+        function func1() {
+            privateFunc();
+        }
+
+        function func2() {}
+
+        // private functions
+        function privateFunc() {}
+    }
+})();
+  ```
+Please let me @frank know if you have other questions.
 
 
 
