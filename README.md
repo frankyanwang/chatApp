@@ -213,10 +213,6 @@ Sample Coding structure:
     }
 })();
   ```
-Please let me @frank know if you have other questions.
-
-
-
 
 
 
