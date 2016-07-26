@@ -13,18 +13,22 @@ $ brew uninstall android-sdk
 
 Due to use of Salesforce Cordova plugins library, there are currently many restrictions, so please use recommanded versions of libraries to avoid problems.
 
-Corova CLI:  5.4.0
+Corova CLI:  6.3.0
 Cordova platform android: 5.0.0
-shelljs: 0.5.3
+Cordova platform ios: 3.9.2
+shelljs: 0.7.0
 
 For Android build, current Ionic generated Android project doesn't work well with Salesforce Cordova plugins. A special version of ForceDroid (forcedroid-4.1.1.tgz sent from Bharath Hariharan) are used to generate the project.
 
-Install Cordova:
+Install Ionic, Cordova, ShellJS:
 ```bash
-$ sudo npm install -g ionic cordova@5.4.0 (prefered version)
+$ sudo npm install -g ionic cordova
+$ sudo npm install shelljs@0.7.0
 ```
 
 Assume you are in your project root folder $.
+
+Note: ionic and cordova command are interchangable for most of command below.
 
 Setup for iOS:  (Please install latest Xcode before)
 ```bash
@@ -34,26 +38,59 @@ $ ionic build ios
 
 1. Run on iOS simulator.
 $ ionic emulate ios --target="iPhone-6"
+$ ionic emulate ios --target="iPad-Air"
 
 2. Run on iOS real device, if no device, fall back to Simulator.
 $ ionic run ios
 ```
 
-Setup for Android: (Note: android generated code are checked in already. 
-So no need to go through the creation process again.)
+Setup for Android: (Note: Since SalesforceMobileSDK-CordovaPlugin has fixed the broken build process issue, so I reverted two hacks I did to make it build/running on Android device. However it is still not perfect. So please follow the steps below strictly.)
 
 ```bash
-Copy dev files to generated android assets folder
+Migration Steps, Assume you have already setup the Android Platform and SalesforceCordovaPlugin:
+1. Remove Salesforce Plugin.
+$ cordova plugin rm com.salesforce
+2. Remove Android Platform
+$ cordova platform remove android
+
+3. Add required and plugins.
+$ cordova plugin add cordova-plugin-screen-orientation
+$ cordova plugin add cordova-plugin-inappbrowser
+etc.....
+
+4. Add SalesforceCordovaPlugin and its dependent plugins.
+$ cordova plugin add https://github.com/forcedotcom/SalesforceMobileSDK-CordovaPlugin
+
+Important: this step will do bunch of things: 1. add plugins. 2.post install scripts. 3. copy assets to android platform folders. 4. fixed up the AndroidManifest.xml file. This step has to work perfectly.
+
+Never run the following two commands. It will screwed up the whole build process.
+$ Cordova Prepare. 
+$ Cordova build android
+
+5. Launch Android Studio: (v2.1.2)
+From the welcome screen, select Import project (Eclipse ADT, Gradle, etc.).
+Select <your_target_dir>/<your_app_name>/platforms/android and click OK.
+
+6. Build will failed.
+Open build.gradle file.
+Change this block: gradle:2.1.2.
+
+else if (gradle.gradleVersion >= "2.1") {
+        dependencies {
+            classpath 'com.android.tools.build:gradle:2.1.2'
+        }
+}
+
+Then you can click on try again click to start build again.
+
+After the build finishes, select the android target and click Run ‘android’ from either the menu or the toolbar. Select a connected Android device or emulator.
+
+Now Everything should work the first time.
+
+Continue development:
+
+After you make some changes. Copy dev files to generated android assets folder
 $ grunt android 
-
-Go to android folder to run build command there. You can use a second terminal for it.
-$ cd platforms/android
-$ ./gradlew assembleDebug (use assembleDebug for now, this will build the android apk file)
-
-You might have problems building your app. Two probelms I have seen so far.
-1. Make sure you have Android SDK Build Tools 23.0.1 installed. 
-Android Studio->Preference->Appearance->System Settings->Android SDK->Launch Standalone SDK Manager.
-2. Open gradle-wrapper.properties file, change distributionUrl to gradle-2.3-all.zip.
 
 1. Run on real device.
 assume you have adb on your path. Otherwise use full path "/Users/frankwang/Library/Android/sdk/platform-tools/adb" instead.
@@ -87,16 +124,6 @@ ionic-plugin-keyboard 1.0.8 "Keyboard"
 phonegap-plugin-push 1.5.3 "PushPlugin"
 ```
 
-Install SalesforceMobileSDK Cordova plugin:
-```bash
-$ ionic plugin add https://github.com/forcedotcom/SalesforceMobileSDK-CordovaPlugin
-```
-
-Install Cordova plugin: (either one is okay.)
-```bash
-$ ionic plugin add name_of_plugin(cordova-plugin-screen-orientation)
-$ cordova plugin add name_of_plugin
-```
 
 These are the Issue I run into:
 
