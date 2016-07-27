@@ -58,6 +58,9 @@ $ cordova plugin add cordova-plugin-screen-orientation
 $ cordova plugin add cordova-plugin-inappbrowser
 etc.....
 
+3.1 Add back Android platform
+$ cordova platform add android@5.0.0
+
 4. Add SalesforceCordovaPlugin and its dependent plugins.
 $ cordova plugin add https://github.com/forcedotcom/SalesforceMobileSDK-CordovaPlugin
 
